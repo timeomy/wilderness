@@ -43,17 +43,19 @@ http.createServer((req, res) => {
     return;
   }
 
-  // 每次都重新读档，改了 index.html 重整就看得到
+  // 每次都重新读档，改了档案重整就看得到
+  const name = (u.pathname === '/' ? 'index.html' : path.basename(u.pathname)) || 'index.html';
   try {
-    send(res, 200, 'text/html; charset=utf-8', fs.readFileSync(path.join(HERE, 'index.html')));
+    send(res, 200, 'text/html; charset=utf-8', fs.readFileSync(path.join(HERE, name)));
   } catch (e) {
-    send(res, 500, 'text/plain; charset=utf-8', '找不到 index.html');
+    send(res, 404, 'text/plain; charset=utf-8', '找不到 ' + name);
   }
 }).listen(PORT, () => {
   const lan = [].concat(...Object.values(os.networkInterfaces()))
     .filter(i => i.family === 'IPv4' && !i.internal).map(i => i.address);
   console.log('\n  旷野公司 · 本机试玩中\n');
-  console.log('  这台电脑（大屏幕）  http://localhost:' + PORT);
+  console.log('  一个人玩            http://localhost:' + PORT);
+  console.log('  活动版（大屏幕）    http://localhost:' + PORT + '/event.html');
   lan.forEach(ip => console.log('  手机（同一个 WiFi）  http://' + ip + ':' + PORT));
   console.log('\n  主持人密码 ' + PIN + '　·　Ctrl+C 结束，分数不会留着\n');
 });
