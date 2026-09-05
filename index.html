@@ -41,8 +41,12 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 .top .t{font-size:22px;font-weight:800}
 .top .d{margin-left:auto;background:var(--ink);color:var(--gold);border-radius:100px;
  padding:6px 14px;font-size:15px;font-variant-numeric:tabular-nums}
-.swap{background:none;border:none;font-family:var(--f);font-weight:800;font-size:15px;
- color:var(--ink2);cursor:pointer;padding:4px 0;margin-bottom:14px}
+.swap{background:#F1E7D2;border:none;border-radius:100px;font-family:var(--f);font-weight:800;
+ font-size:15px;color:var(--ink);cursor:pointer;padding:10px 18px;margin-bottom:14px}
+.roomline{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:22px;
+ font-size:13px;color:var(--ink2)}
+.roomline button{background:none;border:none;font-family:var(--f);font-weight:800;
+ font-size:13px;color:var(--rockD);text-decoration:underline;cursor:pointer;padding:6px}
 .pick{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 .pick button{border:none;border-radius:16px;padding:16px 4px;background:#fff;color:var(--ink);
  font-family:var(--f);font-weight:800;font-size:15px;cursor:pointer;line-height:1.3;
@@ -84,14 +88,19 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 
 /* ---------- the wall ---------- */
 #wall.on{display:flex;flex-direction:column;height:100vh;padding:2.4vh 3vw;overflow:hidden;background:var(--sand)}
-.wtop{display:flex;align-items:baseline;gap:2vw;margin-bottom:1.4vh;flex:none}
+.wtop{display:flex;align-items:baseline;gap:2vw;margin-bottom:1.4vh;flex:none;
+ position:relative;z-index:10}
 .wday{font-size:clamp(26px,4.2vw,66px);font-weight:800;letter-spacing:-.02em}
 .wday i{font-style:normal;color:var(--ink2);font-size:.42em;font-weight:800}
 .wcode{font-size:clamp(14px,1.9vw,30px);color:var(--ink2);letter-spacing:.16em}
 .wcode b{color:var(--ink)}
 .wclock{margin-left:auto;font-size:clamp(16px,2.2vw,34px);color:var(--ink2);font-variant-numeric:tabular-nums}
-.wexit{background:none;border:none;font-family:var(--f);font-weight:800;color:#C7B9A2;
- font-size:clamp(12px,1.4vw,20px);cursor:pointer}
+.wexit{background:var(--ink);color:#fff;border:none;border-radius:100px;
+ font-family:var(--f);font-weight:800;padding:8px 18px;margin-left:1.5vw;
+ font-size:clamp(13px,1.5vw,22px);cursor:pointer}
+.waitout{display:inline-block;background:var(--ink);color:#fff;border-radius:100px;
+ padding:12px 26px;font-size:clamp(14px,1.8vw,24px);margin-top:3vh;cursor:pointer;border:none;
+ font-family:var(--f);font-weight:800}
 .lanes{flex:1;display:flex;flex-direction:column;gap:1.1vh;justify-content:center;min-height:0}
 .lane{display:grid;grid-template-columns:2.4fr auto 1fr;gap:2vw;align-items:center;
  background:#fff;border-radius:20px;padding:1.15vh 2vw;box-shadow:0 2px 10px rgba(90,60,20,.09);min-height:0;
@@ -107,7 +116,17 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 .pts{text-align:right;font-size:clamp(23px,3.3vw,54px);font-weight:800;font-variant-numeric:tabular-nums;
  letter-spacing:-.02em}
 .wrule{text-align:center;font-size:clamp(13px,1.6vw,24px);color:var(--ink2);margin-top:1.4vh;flex:none}
-.wait{position:absolute;inset:0;display:grid;place-items:center;background:var(--sand);
+.wctl{flex:none;display:none;gap:1vw;justify-content:center;align-items:center;
+ margin-top:1.2vh;position:relative;z-index:20;flex-wrap:wrap}
+.wctl button{background:var(--ink);color:#fff;border:none;border-radius:100px;
+ padding:10px 20px;font-family:var(--f);font-weight:800;
+ font-size:clamp(12px,1.5vw,21px);cursor:pointer}
+.wctl button.go{background:var(--teal)}
+.wctl button.warn{background:var(--rock)}
+.wctl input{width:clamp(110px,12vw,170px);font-family:var(--f);font-weight:800;
+ font-size:clamp(14px,1.7vw,22px);text-align:center;letter-spacing:.3em;
+ border:2px solid #E6DCC8;border-radius:100px;padding:10px;background:#fff}
+.wait{position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:var(--sand);
  text-align:center;padding:4vh 6vw}
 .wait .big{font-size:clamp(20px,3vw,46px);color:var(--ink2);line-height:1.6}
 .wait .code{font-size:clamp(46px,11vw,150px);letter-spacing:.2em;margin:2vh 0;line-height:1}
@@ -177,15 +196,21 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
   <div class="have" id="have"></div>
   <div id="btns"></div>
   <div class="out" id="out"></div>
+  <div class="roomline">房间 <b id="jroom"></b>
+    <button onclick="changeRoom()">换房间</button>
+    <button onclick="resetDevice()">重选身份</button></div>
 </div></div>
 
 <!-- WALL -->
 <div class="v" id="wall">
   <div class="wtop"><span class="wday" id="wd">第 0 天 <i>/ 15</i></span>
     <span class="wcode" id="wcode"></span>
-    <span class="wclock" id="wc"></span><button class="wexit" onclick="be('who')">换</button></div>
+    <span class="wclock" id="wc"></span>
+    <button class="wexit" onclick="toggleHostBar()">🎛️ 主持</button>
+    <button class="wexit" onclick="be('who')">换</button></div>
   <div class="lanes" id="lanes"></div>
   <div class="wrule" id="wr"></div>
+  <div class="wctl" id="wctl"></div>
   <div class="wait" id="wait"></div>
 </div>
 
@@ -214,10 +239,13 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
     <div id="htab"></div>
     <div class="ctl" style="grid-template-columns:1fr;margin-top:14px">
       <button class="warn" onclick="if(confirm('全部归零？'))cmd('reset')">归零</button></div>
+    <div class="roomline">房间 <b id="hroom"></b>
+      <button onclick="changeRoom()">换房间</button>
+      <button onclick="resetDevice()">重选身份</button></div>
   </div>
 </div></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.10.1/mqtt.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.10.1/mqtt.min.js" crossorigin="anonymous"></script>
 <script>
 "use strict";
 /* ═══════════════════════════════════════════════════════════════
@@ -355,6 +383,17 @@ var newCode=function(){var A='ABCDEFGHJKLMNPQRSTUVWXYZ',s='';
 var isScreen=function(){return me==='wall';};
 var topic=function(k){return 'wildernessco/'+room+'/'+k;};
 
+/* 出事要留得下痕迹。中继的函式库是跨网域载入的，
+   浏览器只会给「Script error.」，所以自己抓自己记。 */
+window.WC_ERRORS=[];
+function logErr(where,err){
+  try{
+    window.WC_ERRORS.push({at:where,msg:String(err&&err.message||err),
+      stack:String(err&&err.stack||'').split('\n').slice(0,3).join(' | '),t:new Date().toISOString()});
+    if(window.WC_ERRORS.length>40) window.WC_ERRORS.shift();
+    if(window.console&&console.warn) console.warn('[旷野公司]',where,err);
+  }catch(e){}
+}
 var connKey='';
 function connect(){
   // 同一个房间、同一种角色就不要重接。关主按「换」不该把连线整个拆掉重来。
@@ -392,21 +431,25 @@ function openOne(i,myGen,waitMs){
   client.on('error',again);
   client.on('close',again);
   client.on('connect',function(){
-    if(myGen!==gen){ try{ client.end(true); }catch(e){} return; }
-    slot.up=true; backoff=2500; refreshLive();
-    if(isScreen()){ client.subscribe(topic('act')); publishState(); }
-    else { client.subscribe(topic('state')); client.subscribe(topic('ack')); }
-    paint();
+    try{
+      if(myGen!==gen){ try{ client.end(true); }catch(e){} return; }
+      slot.up=true; backoff=2500; refreshLive();
+      if(isScreen()){ client.subscribe(topic('act')); publishState(); }
+      else { client.subscribe(topic('state')); client.subscribe(topic('ack')); }
+      paint();
+    }catch(err){ logErr('connect',err); }
   });
   client.on('message',function(tp,pl){
-    if(myGen!==gen) return;
-    var d; try{ d=JSON.parse(pl.toString()); }catch(e){ return; }
-    if(isScreen()&&tp===topic('act')){
-      if(d.rid){ if(seenRid[d.rid]) return; seenRid[d.rid]=1; trimSeen(); }
-      return onAct(d);
-    }
-    if(tp===topic('state')){ S=d; live=true; paint(); return; }
-    if(tp===topic('ack')&&pend[d.rid]){ delete pend[d.rid]; showAck(d); }
+    try{
+      if(myGen!==gen) return;
+      var d; try{ d=JSON.parse(pl.toString()); }catch(e){ return; }
+      if(isScreen()&&tp===topic('act')){
+        if(d.rid){ if(seenRid[d.rid]) return; seenRid[d.rid]=1; trimSeen(); }
+        return onAct(d);
+      }
+      if(tp===topic('state')){ S=d; live=true; paint(); return; }
+      if(tp===topic('ack')&&pend[d.rid]){ delete pend[d.rid]; showAck(d); }
+    }catch(err){ logErr('message',err); }
   });
 }
 function refreshLive(){
@@ -490,6 +533,7 @@ function be(v){
   if(v==='who'){ me=''; localStorage.removeItem('me'); }
   if(tick){ clearInterval(tick); tick=null; }
 
+  if(v!=='wall'){ wHostOpen=false; var wc=document.getElementById('wctl'); if(wc) wc.style.display='none'; }
   if(v==='wall'){
     if(!room){ room=newCode(); localStorage.setItem('room',room); }
     GS=loadGS();
@@ -546,6 +590,7 @@ function paint(){
   if(me==='wall') return wall();
   if(me==='host') return hostView();
   if(!JOB[me]) return;
+  var jr0=document.getElementById('jroom'); if(jr0) jr0.textContent=room;
   if(!S){
     document.getElementById('jd').textContent='等大屏幕';
     document.getElementById('pick').innerHTML='';
@@ -585,6 +630,21 @@ function paint(){
   }
 }
 function pickTeam(i){ T=i; localStorage.setItem('team',i); paint(); }
+/* 房间号打错了要能改回来，不然只能清浏览器资料 */
+function changeRoom(){
+  room=''; localStorage.removeItem('room');
+  connKey=''; gen++; closeAll(); S=null; live=null;
+  var r=me||'work'; show('join');
+  document.getElementById('joinT').textContent=(JOB[r]?JOB[r].t:'🎛️ 主持人');
+  document.getElementById('code').value='';
+  paint();
+}
+/* 整台重来：身份、房间、公司全部清掉 */
+function resetDevice(){
+  room=''; me=''; T=null; S=null; live=null; connKey=''; gen++; closeAll();
+  localStorage.removeItem('room'); localStorage.removeItem('me'); localStorage.removeItem('team');
+  show('who');
+}
 function hit(a){ document.getElementById('out').textContent=''; send({action:a,team:T}); }
 var lastEvDay=-1;
 function wall(){
@@ -598,13 +658,15 @@ function wall(){
       '<div class="big" style="margin-top:3vh">或输入房间号</div>'+
       '<div class="code">'+room+'</div>'+
       '<div class="big" style="font-size:clamp(15px,2vw,30px)">'+
-      (live===false?'⚠️ 中继连不上，检查这台的网络':'主持人按「开始」就出发')+'</div></div>';
+      (live===false?'⚠️ 中继连不上，检查这台的网络':'主持人按「开始」就出发')+'</div>'+
+      '<button class="waitout" onclick="be(\'who\')">← 我不是大屏幕，换身份</button></div>';
     if(!S) return;
   } else if(live===false){
     w.style.display='grid';
     w.innerHTML='<div><div class="big">⚠️ 中继断线</div>'+
       '<div class="big" style="font-size:clamp(15px,2vw,30px);margin-top:2vh">'+
-      '分数没有丢，还在这台上。<br>等它自己接回来，或换成同一个 WiFi 的做法。</div></div>';
+      '分数没有丢，还在这台上。<br>等它自己接回来，或换成同一个 WiFi 的做法。</div>'+
+      '<button class="waitout" onclick="be(\'who\')">← 换身份</button></div>';
   } else w.style.display='none';
   document.getElementById('wd').innerHTML='第 '+S.day+' 天 <i>/ '+S.days+'</i>';
   var m=Math.floor(S.secs/60), sec=S.secs%60;
@@ -621,6 +683,43 @@ function wall(){
   if(S.event&&S.day!==lastEvDay&&lastEvDay!==-1) showEv(S.event);
   lastEvDay=S.day;
 }
+/* 主持人就站在大屏幕旁边的话，直接在这台按就好。
+   不要为了按「开始」把大屏幕切成主持人身份 —— 一切换，这台就不是主机了。 */
+var wHostOpen=false, wUnlocked=false, wArmReset=0;
+function toggleHostBar(){ wHostOpen=!wHostOpen; drawHostBar(); }
+function drawHostBar(){
+  var el=document.getElementById('wctl');
+  if(!el) return;
+  if(!wHostOpen||!isScreen()){ el.style.display='none'; return; }
+  el.style.display='flex';
+  if(!wUnlocked){
+    el.innerHTML='<input id="wpin" inputmode="numeric" placeholder="••••">'+
+      '<button onclick="wGate()">进</button>'+
+      '<button onclick="toggleHostBar()">关</button>';
+    return;
+  }
+  el.innerHTML='<button class="go" onclick="wHost(\'start\')">▶︎ 开始</button>'+
+    '<button onclick="wHost(\'pause\')">⏸ 暂停</button>'+
+    '<button onclick="wHost(\'skip\')">⏩ 下一天</button>'+
+    '<button onclick="wHost(\'undo\')">↩︎ 撤销</button>'+
+    '<button class="warn" onclick="wHost(\'reset\')">'+
+      (wArmReset?'再按一次确定归零':'归零')+'</button>'+
+    '<button onclick="toggleHostBar()">关</button>';
+}
+function wGate(){
+  var i=document.getElementById('wpin'), v=(i&&i.value||'').trim();
+  if(v!==PIN){ if(i){ i.value=''; i.placeholder='密码不对'; } return; }
+  wUnlocked=true; drawHostBar();
+}
+function wHost(a){
+  if(!isScreen()||!GS) return;
+  if(a==='reset'){
+    if(!wArmReset){ wArmReset=1; drawHostBar();
+      setTimeout(function(){ wArmReset=0; drawHostBar(); },3000); return; }
+    wArmReset=0;
+  }
+  GS=host_(GS,a); saveGS(); publishState(true); drawHostBar();
+}
 function showEv(e){
   var old=document.querySelectorAll('.ev');
   for(var i=0;i<old.length;i++) old[i].remove();
@@ -633,6 +732,7 @@ function showEv(e){
 }
 function hostView(){
   document.getElementById('hcode').textContent=room;
+  var hr=document.getElementById('hroom'); if(hr) hr.textContent=room;
   document.getElementById('url').textContent=location.origin+location.pathname+'?room='+room;
   if(!S) return;
   document.getElementById('names').innerHTML=S.rows.map(function(r){
@@ -645,6 +745,7 @@ function hostView(){
 }
 function ren(i){ send({action:'rename',team:i,name:document.getElementById('nm'+i).value}); }
 
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') be('who'); });
 be(me&&(JOB[me]||me==='wall'||me==='host')?me:'who');
 setInterval(function(){ if(!isScreen()&&live) paint(); },2000);
 </script></body></html>
