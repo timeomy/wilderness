@@ -9,18 +9,32 @@ html,body{min-height:100%;font-family:var(--f);font-weight:800;color:var(--ink);
 background:var(--sand);-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
 .v{display:none}.v.on{display:block}
 .w{max-width:560px;margin:0 auto;padding:22px 18px 34px}
+h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
+.tag{font-size:15px;color:var(--ink2);margin-top:6px;line-height:1.6}
 
 /* ---------- pick who you are ---------- */
-.who{display:grid;gap:12px;margin-top:26px}
+.who{display:grid;gap:12px;margin-top:22px}
 .who button{border:none;border-radius:20px;padding:22px 20px;text-align:left;cursor:pointer;
  font-family:var(--f);font-weight:800;font-size:20px;color:#fff;display:flex;align-items:center;gap:16px;
  transition:transform .18s cubic-bezier(.2,1.3,.4,1)}
 .who button:active{transform:scale(.97)}
 .who .ic{font-size:30px;line-height:1}
+.who .sm{display:block;font-size:13px;opacity:.85;margin-top:3px;font-weight:800}
 .b1{background:var(--ink)}.b2{background:var(--goldD)}.b3{background:var(--grape)}
 .b4{background:var(--teal)}.b5{background:var(--rock)}.b6{background:#4A3728}
-h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
-.tag{font-size:15px;color:var(--ink2);margin-top:6px}
+
+/* ---------- room code ---------- */
+.room{margin-top:20px}
+.codein{display:flex;gap:9px;margin-top:12px}
+.codein input{flex:1;font-family:var(--f);font-weight:800;font-size:28px;letter-spacing:.3em;
+ text-transform:uppercase;text-align:center;padding:16px;border:2px solid #E6DCC8;
+ border-radius:16px;background:#fff;min-width:0}
+.codein button{border:none;border-radius:16px;padding:0 26px;background:var(--teal);color:#fff;
+ font-family:var(--f);font-weight:800;font-size:18px;cursor:pointer}
+.joinurl{background:#fff;border-radius:16px;padding:14px;font-size:15px;color:var(--tealD);
+ word-break:break-all;margin-top:10px;text-align:center;line-height:1.5}
+.net{font-size:13px;margin-top:12px;text-align:center;color:var(--ink2)}
+.net b{color:var(--tealD)}.net.bad b{color:var(--rockD)}
 
 /* ---------- one job screen ---------- */
 .top{display:flex;align-items:center;gap:10px;margin-bottom:20px}
@@ -64,7 +78,7 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 @keyframes roll{0%{transform:rotate(-180deg) scale(.3);opacity:0}100%{transform:none;opacity:1}}
 .pinrow{display:flex;gap:9px;margin-top:14px}
 .pinrow input{flex:1;font-family:var(--f);font-weight:800;font-size:22px;letter-spacing:.4em;
- text-align:center;padding:14px;border:2px solid #E6DCC8;border-radius:16px;background:#fff}
+ text-align:center;padding:14px;border:2px solid #E6DCC8;border-radius:16px;background:#fff;min-width:0}
 .pinrow button{border:none;border-radius:16px;padding:0 24px;background:var(--teal);color:#fff;
  font-family:var(--f);font-weight:800;font-size:17px;cursor:pointer}
 
@@ -73,6 +87,8 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 .wtop{display:flex;align-items:baseline;gap:2vw;margin-bottom:1.4vh;flex:none}
 .wday{font-size:clamp(26px,4.2vw,66px);font-weight:800;letter-spacing:-.02em}
 .wday i{font-style:normal;color:var(--ink2);font-size:.42em;font-weight:800}
+.wcode{font-size:clamp(14px,1.9vw,30px);color:var(--ink2);letter-spacing:.16em}
+.wcode b{color:var(--ink)}
 .wclock{margin-left:auto;font-size:clamp(16px,2.2vw,34px);color:var(--ink2);font-variant-numeric:tabular-nums}
 .wexit{background:none;border:none;font-family:var(--f);font-weight:800;color:#C7B9A2;
  font-size:clamp(12px,1.4vw,20px);cursor:pointer}
@@ -92,7 +108,10 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
  letter-spacing:-.02em}
 .wrule{text-align:center;font-size:clamp(13px,1.6vw,24px);color:var(--ink2);margin-top:1.4vh;flex:none}
 .wait{position:absolute;inset:0;display:grid;place-items:center;background:var(--sand);
- font-size:clamp(20px,3vw,48px);color:var(--ink2)}
+ text-align:center;padding:4vh 6vw}
+.wait .big{font-size:clamp(20px,3vw,46px);color:var(--ink2);line-height:1.6}
+.wait .code{font-size:clamp(46px,11vw,150px);letter-spacing:.2em;margin:2vh 0;line-height:1}
+.wait .url{font-size:clamp(15px,2.2vw,32px);color:var(--tealD);word-break:break-all}
 .ev{position:fixed;inset:0;z-index:90;display:grid;place-items:center;text-align:center;
  background:var(--ink);color:#fff;padding:8vh 8vw;cursor:pointer;animation:fade .4s}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -103,15 +122,13 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 /* ---------- host ---------- */
 .hrow{display:flex;gap:8px;margin-bottom:9px}
 .hrow input{flex:1;font-family:var(--f);font-weight:800;font-size:16px;padding:11px 13px;
- border:2px solid #E6DCC8;border-radius:14px;background:#fff}
+ border:2px solid #E6DCC8;border-radius:14px;background:#fff;min-width:0}
 .hrow button{border:none;border-radius:14px;padding:0 18px;background:var(--teal);color:#fff;
  font-family:var(--f);font-weight:800;font-size:15px;cursor:pointer}
 .ctl{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:6px}
 .ctl button{border:none;border-radius:16px;padding:18px;font-family:var(--f);font-weight:800;
  font-size:17px;color:#fff;cursor:pointer;background:var(--ink)}
 .ctl button.go{background:var(--teal)}.ctl button.warn{background:var(--rock)}
-.url{background:#fff;border-radius:16px;padding:16px;font-size:17px;color:var(--tealD);
- word-break:break-all;margin-top:6px}
 table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;border-radius:14px;overflow:hidden}
 th{background:var(--ink);color:#fff;padding:9px;font-size:13px;font-weight:800}
 td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
@@ -119,14 +136,34 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
 
 <!-- WHO -->
 <div class="v on" id="who"><div class="w">
-  <h1>旷野公司</h1><div class="tag">你是谁？</div>
+  <h1>旷野公司</h1>
+  <div class="tag">十五天。六间公司。四个关站。<br>你是谁？</div>
   <div class="who">
-    <button class="b1" onclick="be('wall')"><span class="ic">🖥️</span>大屏幕</button>
-    <button class="b2" onclick="be('work')"><span class="ic">💰</span>市场</button>
-    <button class="b3" onclick="be('altar')"><span class="ic">🙌</span>祭坛</button>
-    <button class="b4" onclick="be('build')"><span class="ic">🏗️</span>工地</button>
-    <button class="b5" onclick="be('tempt')"><span class="ic">🪝</span>试探官</button>
-    <button class="b6" onclick="be('host')"><span class="ic">🎛️</span>主持人</button>
+    <button class="b1" onclick="be('wall')"><span class="ic">🖥️</span>
+      <span>大屏幕<span class="sm">投影／电视。整场分数记在这台，全程不要关</span></span></button>
+    <button class="b2" onclick="be('work')"><span class="ic">💰</span>
+      <span>市场<span class="sm">关主手机</span></span></button>
+    <button class="b3" onclick="be('altar')"><span class="ic">🙌</span>
+      <span>祭坛<span class="sm">关主手机</span></span></button>
+    <button class="b4" onclick="be('build')"><span class="ic">🏗️</span>
+      <span>工地<span class="sm">关主手机</span></span></button>
+    <button class="b5" onclick="be('tempt')"><span class="ic">🪝</span>
+      <span>试探官<span class="sm">关主手机</span></span></button>
+    <button class="b6" onclick="be('host')"><span class="ic">🎛️</span>
+      <span>主持人<span class="sm">开始／暂停／改名／归零</span></span></button>
+  </div>
+</div></div>
+
+<!-- JOIN (phones) -->
+<div class="v" id="join"><div class="w">
+  <button class="swap" onclick="be('who')">← 换</button>
+  <h1 id="joinT">加入</h1>
+  <div class="tag">输入大屏幕上那四个字母。</div>
+  <div class="room">
+    <div class="codein"><input id="code" maxlength="4" autocapitalize="characters"
+        autocomplete="off" placeholder="ABCD">
+      <button onclick="joinRoom()">进</button></div>
+    <div class="net" id="joinNet"></div>
   </div>
 </div></div>
 
@@ -134,8 +171,8 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
 <div class="v" id="job"><div class="w">
   <button class="swap" onclick="be('who')">← 换</button>
   <div class="top"><span class="t" id="jt"></span><span class="d" id="jd">—</span></div>
-  <div id="say"></div>
   <div id="jerr"></div>
+  <div id="say"></div>
   <div class="pick" id="pick"></div>
   <div class="have" id="have"></div>
   <div id="btns"></div>
@@ -145,10 +182,11 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
 <!-- WALL -->
 <div class="v" id="wall">
   <div class="wtop"><span class="wday" id="wd">第 0 天 <i>/ 15</i></span>
+    <span class="wcode" id="wcode"></span>
     <span class="wclock" id="wc"></span><button class="wexit" onclick="be('who')">换</button></div>
   <div class="lanes" id="lanes"></div>
   <div class="wrule" id="wr"></div>
-  <div class="wait" id="wait">等主持人开始</div>
+  <div class="wait" id="wait"></div>
 </div>
 
 <!-- HOST -->
@@ -163,8 +201,8 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
   </div>
   <div id="panel" style="display:none">
     <div id="herr"></div>
-    <div class="tag" style="margin-top:14px">大家开这个</div>
-    <div class="url" id="url"></div>
+    <div class="tag" style="margin-top:14px">大家开这个，输入 <b id="hcode"></b></div>
+    <div class="joinurl" id="url"></div>
     <div class="ctl" style="margin-top:18px">
       <button class="go" onclick="cmd('start')">▶︎ 开始</button>
       <button onclick="cmd('pause')">⏸ 暂停</button>
@@ -179,147 +217,434 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
   </div>
 </div></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.10.1/mqtt.min.js"></script>
 <script>
-/* ═══════════════════════════════════════════════════════════
-   ↓↓↓  上 GitHub 前，把引号里贴上你的 Apps Script 网址  ↓↓↓
-   例：const API="https://script.google.com/macros/s/AKfy.../exec";
-   只有这一行要改。要临时换别的后端，网址后面加 ?api=...
-   ═══════════════════════════════════════════════════════════ */
-const API="";
-const api=new URLSearchParams(location.search).get('api')||API||'/api';
-const JOB={work:{t:'💰 市场'},altar:{t:'🙌 祭坛'},build:{t:'🏗️ 工地'},tempt:{t:'🪝 试探官'}};
-let me=localStorage.getItem('me')||'', pin=localStorage.getItem('pin')||'',
-    T=localStorage.getItem('team')!==null?Number(localStorage.getItem('team')):null,
-    S=null, tick=null, live=null;
+"use strict";
+/* ═══════════════════════════════════════════════════════════════
+   没有伺服器。大屏幕就是主机，手机透过免费公共中继跟它讲话。
+   规则跟 Code.gs 一模一样，只是搬到浏览器里跑。
+   ═══════════════════════════════════════════════════════════════ */
+var PIN='4717', N=6, DAYS=15, DAY_MS=60000;
+var START_CASH=10, WORK=5, GAIN=10, MAX=4, LEVEL_PTS=10;
+var BUILD={1:10,2:20,3:30};
+var FAMINE=[6,7], GRACE=12, DEBTDAY=13;
+var LV_NAME={1:'帐篷',2:'木屋',3:'石屋',4:'城堡'};
+var LV_EMO={1:'⛺',2:'🛖',3:'🏠',4:'🏰'};
+var EVENTS={
+  6:{icon:'🌵',title:'饥荒',text:'市场关闭两天。没得赚的时候，试探最好听。'},
+  8:{icon:'🌾',title:'市场重开',text:'饥荒过去了。'},
+  12:{icon:'🕊️',title:'恩典',text:'每间公司白白得到 1 张 📖。不是你赚的。'},
+  13:{icon:'💸',title:'还债日',text:'每一个 🪝，拆掉一层楼。钱买不回来。'},
+  15:{icon:'🏁',title:'第十五天',text:'结算。'}
+};
+var BROKERS=['wss://broker.emqx.io:8084/mqtt','wss://broker.hivemq.com:8884/mqtt'];
 
-function esc(x){return String(x).replace(/[&<>"']/g,
-  c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function pickTeam(i){T=i;localStorage.setItem('team',i);paint()}
-
-function be(v){
-  if(JOB[v]||v==='wall'||v==='host') me=v, localStorage.setItem('me',v);
-  if(v==='who') localStorage.removeItem('me');
-  document.querySelectorAll('.v').forEach(x=>x.classList.remove('on'));
-  document.getElementById(v==='wall'?'wall':v==='host'?'host':JOB[v]?'job':'who').classList.add('on');
-  if(tick){clearInterval(tick);tick=null}
-  if(JOB[v]){document.getElementById('jt').textContent=JOB[v].t;pull();tick=setInterval(pull,2500)}
-  if(v==='wall'){pull();tick=setInterval(pull,1500)}
-  if(v==='host'){document.getElementById('url').textContent=location.origin+location.pathname;
-    document.getElementById('gate').style.display=pin?'none':'block';
-    document.getElementById('panel').style.display=pin?'block':'none';
-    pull();tick=setInterval(pull,1500)}
+/* ── 规则（大屏幕才跑） ─────────────────────────────────── */
+function fresh_(){
+  var co=[];
+  for(var i=0;i<N;i++) co.push({name:'第 '+(i+1)+' 公司',cash:START_CASH,word:0,debt:0,level:1});
+  return {start:null,pausedAt:null,paused:0,grace:false,collected:false,co:co,hist:[]};
 }
-function gate(){pin=(document.getElementById('pin').value||'').trim();
-  const g=document.getElementById('gerr'); g.innerHTML='';
-  fetch(api+'?action=ping&pin='+encodeURIComponent(pin)).then(r=>r.json()).then(d=>{
-    if(d.ok){localStorage.setItem('pin',pin);be('host')}
-    else{pin='';g.innerHTML='<div class="out bad" style="margin-top:14px">密码不对</div>'}})
-   .catch(()=>{pin='';g.innerHTML=notice()})}
-function cmd(a){fetch(api+'?action='+a+'&pin='+encodeURIComponent(pin)).then(pull)}
-function send(b){return fetch(api,{method:'POST',body:JSON.stringify(Object.assign({pin:pin},b))}).then(r=>r.json())}
-function pull(){fetch(api+'?t='+Date.now()).then(r=>r.json())
-  .then(d=>{S=d;live=true;paint()})
-  .catch(()=>{live=false;paint()})}
-function notice(){
-  if(!api||api==='/api')
-    return '<div class="note"><div class="ic">🔌</div>'+
-      '<div class="h">还没接上后端</div><div class="b">'+
-      '打开 <code>index.html</code>，把开头那一行<br><code>const API="";</code><br>'+
-      '换成你的 Apps Script 网址，再上传一次。</div></div>';
-  return '<div class="note"><div class="ic">📡</div>'+
-    '<div class="h">连不上后端</div><div class="b">'+
-    '先确认手机有网络。<br>还是不行的话，Apps Script 那边要是<br>'+
-    '「部署 → 存取权限：任何人」，<br>而且改过 Code.gs 要重新部署新版本。</div></div>';
+function elapsed_(s){
+  if(!s.start) return 0;
+  var now = s.pausedAt ? s.pausedAt : Date.now();
+  return now - s.start - s.paused;
 }
-
-function paint(){
-  const band = live===false ? notice() : '';   // 只贴在自己的格子里，不要盖掉整个面板
-  const he=document.getElementById('herr'); if(he) he.innerHTML=(me==='host'&&pin)?band:'';
-  const je=document.getElementById('jerr'); if(je) je.innerHTML=JOB[me]?band:'';
-  if(!S){
-    if(me==='wall'){
-      document.getElementById('wait').style.display='grid';
-      document.getElementById('wait').innerHTML=live===false?notice():'连线中…';
-    } else if(JOB[me]){
-      document.getElementById('pick').innerHTML='';
-      document.getElementById('have').innerHTML='';
-      document.getElementById('say').innerHTML='';
-      document.getElementById('btns').innerHTML='';
-      document.getElementById('out').textContent='';
+function day_(s){ return s.start ? Math.min(DAYS, Math.floor(elapsed_(s)/DAY_MS)+1) : 0; }
+function inFamine_(d){ return FAMINE.indexOf(d)>=0; }
+function push_(s){
+  s.hist.push(JSON.stringify({co:s.co,grace:s.grace,collected:s.collected}));
+  while(s.hist.length>8) s.hist.shift();
+}
+function auto_(s){
+  var d=day_(s), ch=false;
+  if(d>=GRACE && !s.grace){ for(var i=0;i<N;i++) s.co[i].word++; s.grace=true; ch=true; }
+  if(d>=DEBTDAY){
+    for(var j=0;j<N;j++){
+      var c=s.co[j];
+      while(c.debt>0 && c.level>1){ c.debt--; c.level--; ch=true; }
+      if(c.debt!==0){ c.debt=0; ch=true; }
     }
-    return;
+    if(!s.collected){ s.collected=true; ch=true; }
   }
-  if(me==='wall')return wall();
-  if(me==='host')return host();
-  if(!JOB[me])return;
-  document.getElementById('jd').textContent=S.started?('第 '+S.day+' 天'):'未开始';
-  document.getElementById('pick').innerHTML=S.rows.map(r=>
-    '<button class="'+(r.i===T?'on':'')+'" onclick="pickTeam('+r.i+')"><span class="e">'+r.emo+'</span>'+esc(r.name)+'</button>').join('');
-  const c=S.rows.find(r=>r.i===T);
-  document.getElementById('have').innerHTML=c?
-    ('<span>💰 '+c.cash+'</span><span>📖 '+c.word+'</span>'+(c.debt?'<span style="color:#C0341F">🪝 '+c.debt+'</span>':'')):'';
-  const sayEl=document.getElementById('say'); sayEl.innerHTML='';
-  const B=document.getElementById('btns'); const off=!c;
-  if(me==='work') B.innerHTML='<button class="do work" onclick="hit(\'work\')"'+((off||S.famine)?' disabled':'')+'>'+
-    (S.famine?'🌵 饥荒，市场关着':'给 '+S.work+' 💰')+'</button>';
-  if(me==='altar') B.innerHTML='<button class="do altar" onclick="hit(\'altar\')"'+(off?' disabled':'')+'>给 1 张 📖'+
-    '<span class="s">要先双手举高，大声念出经文</span></button>';
-  if(me==='build'){const can=c&&c.level<4&&c.cash>=c.cost;
-    B.innerHTML='<button class="do build" onclick="hit(\'build\')"'+(can?'':' disabled')+'>'+
-    (c?(c.level>=4?'已经是 🏰 城堡':'盖成 '+['','🛖 木屋','🏠 石屋','🏰 城堡'][c.level]):'盖楼')+
-    '<span class="s">'+(c&&c.level<4?'要 '+c.cost+' 💰':'')+'</span></button>';}
-  if(me==='tempt'){
-    sayEl.innerHTML='<div class="say"><div class="q">「签这里，现在就给你」</div><div class="m">+'+S.gain+' 💰</div></div>';
-    B.innerHTML='<div class="two">'+
-      '<button class="do word" onclick="hit(\'word\')"'+((c&&c.word>0)?'':' disabled')+'>📖 念出神的话'+
-        '<span class="s">'+((c&&c.word>0)?'一定赶走他':'手上没有 📖')+'</span></button>'+
-      '<button class="do will" onclick="hit(\'will\')"'+(off?' disabled':'')+'>🎲 自己撑撑看'+
-        '<span class="s">掷到 1 或 2 才撑得住</span></button></div>';
-  }
+  return ch;
 }
-function hit(a){
-  document.getElementById('out').textContent='';
-  send({action:a,team:T}).then(d=>{
-    const o=document.getElementById('out');
-    if(!d.ok){o.className='out bad';o.textContent=d.error;return}
-    if(a==='will'){
-      const m=d.msg.match(/^🎲 (\d)\s*—\s*/);
-      o.innerHTML='<div class="dice">🎲 '+(m?m[1]:'')+'</div>'+esc(m?d.msg.slice(m[0].length):d.msg);
-      o.className='out '+(d.msg.indexOf('撑住')>0?'good':'bad');
-    } else {o.className='out good';o.textContent=d.msg}
-    pull();
+function state_(s){
+  var d=day_(s), rows=[];
+  for(var i=0;i<N;i++){
+    var c=s.co[i];
+    rows.push({i:i,name:c.name,cash:c.cash,word:c.word,debt:c.debt,level:c.level,
+      lv:LV_NAME[c.level],emo:LV_EMO[c.level],score:(c.level-1)*LEVEL_PTS,cost:BUILD[c.level]||0});
+  }
+  return {rows:rows,day:d,days:DAYS,started:!!s.start,running:!!s.start&&!s.pausedAt,
+    secs: s.start ? Math.max(0, Math.round((DAYS*DAY_MS-elapsed_(s))/1000)) : DAYS*DAY_MS/1000,
+    event:EVENTS[d]||null, famine:inFamine_(d), work:WORK, gain:GAIN, ts:Date.now()};
+}
+function act_(s,d){
+  var a=String(d.action||''), ti=Number(d.team);
+  if(!(ti>=0&&ti<N)) return {ok:false,error:'公司不对'};
+  var c=s.co[ti], dy=day_(s);
+  if(a==='rename'){
+    var nm=String(d.name||'').replace(/^\s+|\s+$/g,'').substring(0,12);
+    if(!nm) return {ok:false,error:'名字不可以空白'};
+    push_(s); c.name=nm; return {ok:true,msg:'改好了'};
+  }
+  if(a==='work'){
+    if(!s.start) return {ok:false,error:'还没开始'};
+    if(inFamine_(dy)) return {ok:false,error:'🌵 饥荒中，市场关着（第 8 天再开）'};
+    push_(s); c.cash+=WORK; return {ok:true,msg:c.name+' +'+WORK+' 💰'};
+  }
+  if(a==='altar'){
+    if(!s.start) return {ok:false,error:'还没开始'};
+    push_(s); c.word++; return {ok:true,msg:c.name+' 得到 1 张 📖'};
+  }
+  if(a==='build'){
+    if(!s.start) return {ok:false,error:'还没开始'};
+    if(c.level>=MAX) return {ok:false,error:c.name+' 已经是 🏰'};
+    var cost=BUILD[c.level];
+    if(c.cash<cost) return {ok:false,error:'要 '+cost+' 💰，'+c.name+' 只有 '+c.cash};
+    push_(s); c.cash-=cost; c.level++;
+    return {ok:true,msg:c.name+' 盖成 '+LV_EMO[c.level]+' '+LV_NAME[c.level]};
+  }
+  if(a==='word'){
+    if(!s.start) return {ok:false,error:'还没开始'};
+    if(c.word<=0) return {ok:false,error:c.name+' 没有 📖，只能自己撑'};
+    push_(s); c.word--; return {ok:true,msg:c.name+' 念出神的话，试探官走了 🛡️'};
+  }
+  if(a==='will'){
+    if(!s.start) return {ok:false,error:'还没开始'};
+    push_(s);
+    var r=Math.floor(Math.random()*6)+1;
+    if(r<=2) return {ok:true,msg:'🎲 '+r+' — 撑住了！'};
+    c.cash+=GAIN; c.debt++;
+    if(dy>=DEBTDAY){
+      var lost=0;
+      while(c.debt>0 && c.level>1){ c.debt--; c.level--; lost++; }
+      c.debt=0;
+      return {ok:true,msg:'🎲 '+r+' — 撑不住，签了 → +'+GAIN+' 💰，'+
+        (lost ? ('马上拆掉一层 → '+LV_EMO[c.level]+' '+LV_NAME[c.level]) : '已经是 ⛺，没得拆了')};
+    }
+    return {ok:true,msg:'🎲 '+r+' — 撑不住，签了 → +'+GAIN+' 💰，欠 1 个 🪝'};
+  }
+  return {ok:false,error:'动作不明'};
+}
+function host_(s,a){
+  if(a==='reset') return fresh_();
+  if(a==='start'){
+    if(!s.start) s.start=Date.now();
+    else if(s.pausedAt){ s.paused += Date.now()-s.pausedAt; s.pausedAt=null; }
+  }
+  else if(a==='pause'){ if(s.start&&!s.pausedAt) s.pausedAt=Date.now(); }
+  else if(a==='skip'){ if(s.start) s.start-=DAY_MS; }
+  else if(a==='undo'){
+    if(s.hist.length){ var h=JSON.parse(s.hist.pop()); s.co=h.co; s.grace=h.grace; s.collected=h.collected; }
+  }
+  return s;
+}
+
+/* ── 连线 ───────────────────────────────────────────────── */
+var JOB={work:{t:'💰 市场'},altar:{t:'🙌 祭坛'},build:{t:'🏗️ 工地'},tempt:{t:'🪝 试探官'}};
+var me=localStorage.getItem('me')||'', pin=localStorage.getItem('pin')||'';
+var room=(new URLSearchParams(location.search).get('room')||localStorage.getItem('room')||'').toUpperCase();
+var T=localStorage.getItem('team')!==null?Number(localStorage.getItem('team')):null;
+var S=null, GS=null, tick=null, live=null, pend={}, conns=[], gen=0, seenRid={};
+var esc=function(x){return String(x).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+var newCode=function(){var A='ABCDEFGHJKLMNPQRSTUVWXYZ',s='';
+  for(var i=0;i<4;i++) s+=A[Math.floor(Math.random()*A.length)]; return s;};
+var isScreen=function(){return me==='wall';};
+var topic=function(k){return 'wildernessco/'+room+'/'+k;};
+
+var connKey='';
+function connect(){
+  // 同一个房间、同一种角色就不要重接。关主按「换」不该把连线整个拆掉重来。
+  var key=room+'|'+(isScreen()?'S':'P');
+  if(key===connKey&&conns.length) return;
+  connKey=key;
+  gen++; closeAll();
+  if(!room){ connKey=''; return; }
+  if(typeof mqtt==='undefined'){ live=false; paint(); return; }
+  for(var i=0;i<BROKERS.length;i++) openOne(i,gen);
+}
+function closeAll(){
+  for(var i=0;i<conns.length;i++){
+    var c=conns[i];
+    if(c&&c.client){ try{ c.client.removeAllListeners(); c.client.end(true); }catch(e){} }
+  }
+  conns=[];
+}
+/* 两个中继同时连。任何一个活着，游戏就跑得动。 */
+function openOne(i,myGen,waitMs){
+  if(myGen!==gen) return;
+  var url=BROKERS[i];
+  var backoff=waitMs||2500;
+  var client=mqtt.connect(url,{connectTimeout:8000,reconnectPeriod:0,clean:true,
+    clientId:'wc_'+Math.random().toString(16).slice(2,10)});
+  var slot={client:client,up:false};
+  conns[i]=slot;
+  var retried=false;
+  var again=function(){
+    if(retried||myGen!==gen) return;
+    retried=true; slot.up=false; refreshLive();
+    // 退避：连不上就越等越久，免得把公共中继打到把我们挡掉
+    setTimeout(function(){ openOne(i,myGen,Math.min(backoff*2,30000)); },backoff);
+  };
+  client.on('error',again);
+  client.on('close',again);
+  client.on('connect',function(){
+    if(myGen!==gen){ try{ client.end(true); }catch(e){} return; }
+    slot.up=true; backoff=2500; refreshLive();
+    if(isScreen()){ client.subscribe(topic('act')); publishState(); }
+    else { client.subscribe(topic('state')); client.subscribe(topic('ack')); }
+    paint();
+  });
+  client.on('message',function(tp,pl){
+    if(myGen!==gen) return;
+    var d; try{ d=JSON.parse(pl.toString()); }catch(e){ return; }
+    if(isScreen()&&tp===topic('act')){
+      if(d.rid){ if(seenRid[d.rid]) return; seenRid[d.rid]=1; trimSeen(); }
+      return onAct(d);
+    }
+    if(tp===topic('state')){ S=d; live=true; paint(); return; }
+    if(tp===topic('ack')&&pend[d.rid]){ delete pend[d.rid]; showAck(d); }
   });
 }
-let seen=-1;
+function refreshLive(){
+  var up=false;
+  for(var i=0;i<conns.length;i++) if(conns[i]&&conns[i].up) up=true;
+  live=up; paint();
+}
+function pub(t,payload,opts){
+  var sent=false;
+  for(var i=0;i<conns.length;i++){
+    var c=conns[i];
+    if(c&&c.up){ try{ c.client.publish(t,payload,opts||{}); sent=true; }catch(e){} }
+  }
+  return sent;
+}
+function trimSeen(){
+  var k=Object.keys(seenRid);
+  if(k.length>300) for(var i=0;i<100;i++) delete seenRid[k[i]];
+}
+/* 大屏幕：收到动作 → 算 → 广播 */
+function onAct(d){
+  var r;
+  if(d.kind==='host'){
+    if(String(d.pin)!==PIN) r={ok:false,error:'密码不对'};
+    else { GS=host_(GS,d.action); saveGS(); r={ok:true}; }
+  } else {
+    if(d.action==='rename' && String(d.pin)!==PIN) r={ok:false,error:'改名要主持人密码'};
+    else { auto_(GS); r=act_(GS,d); auto_(GS); saveGS(); }
+  }
+  if(d.rid) pub(topic('ack'),JSON.stringify({rid:d.rid,ok:r.ok,msg:r.msg,error:r.error}));
+  publishState(true);
+}
+var lastPub=0, lastSig='';
+function publishState(force){
+  if(!isScreen()||!GS) return;
+  if(auto_(GS)) saveGS();
+  S=state_(GS);
+  paint();
+  // 公共中继会因为讲太多话把我们踢掉，所以有变化才送，没变化 6 秒送一次心跳
+  var sig=JSON.stringify(S.rows)+S.day+S.started+S.running;
+  var now=Date.now();
+  if(!force && sig===lastSig && now-lastPub<6000) return;
+  lastSig=sig; lastPub=now;
+  pub(topic('state'),JSON.stringify(S),{retain:true});
+}
+function saveGS(){ try{ localStorage.setItem('gs_'+room,JSON.stringify(GS)); }catch(e){} }
+function loadGS(){
+  try{ var raw=localStorage.getItem('gs_'+room); if(raw) return JSON.parse(raw); }catch(e){}
+  return fresh_();
+}
+/* 手机：送动作，等回覆 */
+function send(b){
+  if(!live){ showAck({ok:false,error:'还没连上，等一下再按'}); return; }
+  var rid=Math.random().toString(36).slice(2,10);
+  pend[rid]=1;
+  pub(topic('act'),JSON.stringify(Object.assign({rid:rid,pin:pin},b)));
+  setTimeout(function(){ if(pend[rid]){ delete pend[rid];
+    showAck({ok:false,error:'大屏幕没有回应。它还开着吗？'}); } },6000);
+}
+function cmd(a){ send({kind:'host',action:a}); }
+function showAck(d){
+  var o=document.getElementById('out');
+  if(me==='host'){
+    var g=document.getElementById('gerr');
+    if(!d.ok&&g&&document.getElementById('gate').style.display!=='none')
+      g.innerHTML='<div class="out bad" style="margin-top:14px">'+esc(d.error||'')+'</div>';
+    return;
+  }
+  if(!o) return;
+  if(!d.ok){ o.className='out bad'; o.textContent=d.error||'不行'; return; }
+  if(d.msg&&d.msg.indexOf('🎲')===0){
+    var m=d.msg.match(/^🎲 (\d)\s*—\s*/);
+    o.innerHTML='<div class="dice">🎲 '+(m?m[1]:'')+'</div>'+esc(m?d.msg.slice(m[0].length):d.msg);
+    o.className='out '+(d.msg.indexOf('撑住')>0?'good':'bad');
+  } else { o.className='out good'; o.textContent=d.msg||''; }
+}
+
+/* ── 画面 ───────────────────────────────────────────────── */
+function be(v){
+  if(JOB[v]||v==='wall'||v==='host'){ me=v; localStorage.setItem('me',v); }
+  if(v==='who'){ me=''; localStorage.removeItem('me'); }
+  if(tick){ clearInterval(tick); tick=null; }
+
+  if(v==='wall'){
+    if(!room){ room=newCode(); localStorage.setItem('room',room); }
+    GS=loadGS();
+    show('wall'); connect();
+    tick=setInterval(publishState,1000);
+    paint(); return;
+  }
+  if((JOB[v]||v==='host') && !room){ show('join');
+    document.getElementById('joinT').textContent=(JOB[v]?JOB[v].t:'🎛️ 主持人');
+    paint(); return; }
+  if(JOB[v]){ show('job'); document.getElementById('jt').textContent=JOB[v].t; connect(); paint(); return; }
+  if(v==='host'){
+    show('host');
+    document.getElementById('gate').style.display=pin?'none':'block';
+    document.getElementById('panel').style.display=pin?'block':'none';
+    connect(); paint(); return;
+  }
+  show('who');
+}
+function show(id){
+  var els=document.querySelectorAll('.v');
+  for(var i=0;i<els.length;i++) els[i].classList.remove('on');
+  document.getElementById(id).classList.add('on');
+}
+function joinRoom(){
+  var v=(document.getElementById('code').value||'').trim().toUpperCase();
+  if(v.length!==4){ document.getElementById('joinNet').innerHTML=
+    '<span class="bad"><b>要四个字母</b></span>'; return; }
+  room=v; localStorage.setItem('room',room); be(me||'work');
+}
+function gate(){
+  pin=(document.getElementById('pin').value||'').trim();
+  if(pin!==PIN){ pin='';
+    document.getElementById('gerr').innerHTML='<div class="out bad" style="margin-top:14px">密码不对</div>';
+    return; }
+  localStorage.setItem('pin',pin); be('host');
+}
+function notice(){
+  return '<div class="note"><div class="ic">📡</div><div class="h">连不上中继</div><div class="b">'+
+    '手机要有网络。<br>大屏幕那台也要开着，而且停在同一个房间号。</div></div>';
+}
+function staleNote(){
+  return '<div class="note"><div class="ic">🖥️</div><div class="h">大屏幕安静了</div><div class="b">'+
+    '底下这些分数是旧的，先不要按。<br>去看一下大屏幕那台还开着吗。</div></div>';
+}
+function stale(){ return S&&S.ts?(Date.now()-S.ts>25000):false; }
+function paint(){
+  var band = live===false ? notice() : (stale()? staleNote() : '');
+  var he=document.getElementById('herr'); if(he) he.innerHTML=(me==='host'&&pin)?band:'';
+  var je=document.getElementById('jerr'); if(je) je.innerHTML=JOB[me]?band:'';
+  var jn=document.getElementById('joinNet');
+  if(jn&&document.getElementById('join').classList.contains('on'))
+    jn.innerHTML=live===false?'<b>连不上，检查网络</b>':(live?'<b>已连上</b>':'连线中…');
+  if(me==='wall') return wall();
+  if(me==='host') return hostView();
+  if(!JOB[me]) return;
+  if(!S){
+    document.getElementById('jd').textContent='等大屏幕';
+    document.getElementById('pick').innerHTML='';
+    document.getElementById('have').innerHTML='';
+    document.getElementById('btns').innerHTML='';
+    return;
+  }
+  document.getElementById('jd').textContent=S.started?('第 '+S.day+' 天'):'未开始';
+  document.getElementById('pick').innerHTML=S.rows.map(function(r){
+    return '<button class="'+(r.i===T?'on':'')+'" onclick="pickTeam('+r.i+')"><span class="e">'+
+      r.emo+'</span>'+esc(r.name)+'</button>';}).join('');
+  var c=null;
+  for(var k=0;k<S.rows.length;k++) if(S.rows[k].i===T) c=S.rows[k];
+  document.getElementById('have').innerHTML=c?
+    ('<span>💰 '+c.cash+'</span><span>📖 '+c.word+'</span>'+
+     (c.debt?'<span style="color:#C0341F">🪝 '+c.debt+'</span>':'')):'';
+  var sayEl=document.getElementById('say'); sayEl.innerHTML='';
+  var B=document.getElementById('btns'), off=!c||stale();
+  if(me==='work') B.innerHTML='<button class="do work" onclick="hit(\'work\')"'+
+    ((off||S.famine)?' disabled':'')+'>'+(S.famine?'🌵 饥荒，市场关着':'给 '+S.work+' 💰')+'</button>';
+  if(me==='altar') B.innerHTML='<button class="do altar" onclick="hit(\'altar\')"'+(off?' disabled':'')+
+    '>给 1 张 📖<span class="s">要先双手举高，大声念出经文</span></button>';
+  if(me==='build'){
+    var can=c&&c.level<4&&c.cash>=c.cost;
+    B.innerHTML='<button class="do build" onclick="hit(\'build\')"'+(can?'':' disabled')+'>'+
+      (c?(c.level>=4?'已经是 🏰 城堡':'盖成 '+['','🛖 木屋','🏠 石屋','🏰 城堡'][c.level]):'盖楼')+
+      '<span class="s">'+(c&&c.level<4?'要 '+c.cost+' 💰':'')+'</span></button>';
+  }
+  if(me==='tempt'){
+    sayEl.innerHTML='<div class="say"><div class="q">「签这里，现在就给你」</div><div class="m">+'+
+      S.gain+' 💰</div></div>';
+    B.innerHTML='<div class="two">'+
+      '<button class="do word" onclick="hit(\'word\')"'+((c&&c.word>0)?'':' disabled')+
+        '>📖 念出神的话<span class="s">'+((c&&c.word>0)?'一定赶走他':'手上没有 📖')+'</span></button>'+
+      '<button class="do will" onclick="hit(\'will\')"'+(off?' disabled':'')+
+        '>🎲 自己撑撑看<span class="s">掷到 1 或 2 才撑得住</span></button></div>';
+  }
+}
+function pickTeam(i){ T=i; localStorage.setItem('team',i); paint(); }
+function hit(a){ document.getElementById('out').textContent=''; send({action:a,team:T}); }
+var lastEvDay=-1;
 function wall(){
-  document.getElementById('wait').style.display=S.started?'none':'grid';
+  var joinUrl=location.origin+location.pathname+'?room='+room;
+  document.getElementById('wcode').innerHTML='房间 <b>'+room+'</b>';
+  var w=document.getElementById('wait');
+  if(!S||!S.started){
+    w.style.display='grid';
+    w.innerHTML='<div><div class="big">手机开这个网址</div>'+
+      '<div class="url">'+esc(joinUrl)+'</div>'+
+      '<div class="big" style="margin-top:3vh">或输入房间号</div>'+
+      '<div class="code">'+room+'</div>'+
+      '<div class="big" style="font-size:clamp(15px,2vw,30px)">'+
+      (live===false?'⚠️ 中继连不上，检查这台的网络':'主持人按「开始」就出发')+'</div></div>';
+    if(!S) return;
+  } else if(live===false){
+    w.style.display='grid';
+    w.innerHTML='<div><div class="big">⚠️ 中继断线</div>'+
+      '<div class="big" style="font-size:clamp(15px,2vw,30px);margin-top:2vh">'+
+      '分数没有丢，还在这台上。<br>等它自己接回来，或换成同一个 WiFi 的做法。</div></div>';
+  } else w.style.display='none';
   document.getElementById('wd').innerHTML='第 '+S.day+' 天 <i>/ '+S.days+'</i>';
-  const m=Math.floor(S.secs/60),s=S.secs%60;
-  document.getElementById('wc').textContent=S.started?(m+':'+String(s).padStart(2,'0')):'';
+  var m=Math.floor(S.secs/60), sec=S.secs%60;
+  document.getElementById('wc').textContent=S.started?(m+':'+String(sec).padStart(2,'0')):'';
   document.getElementById('wr').textContent=S.famine?'🌵 饥荒 — 市场关着':
     '📖 念出神的话 一定赶走试探　🎲 自己撑 六次只成两次';
-  const rows=S.rows.slice().sort((a,b)=>b.score-a.score||b.cash-a.cash);
-  document.getElementById('lanes').innerHTML=rows.map((r,k)=>
-    '<div class="lane'+(k===0&&r.score>0?' lead':'')+'">'+
-    '<div class="lname">'+esc(r.name)+(r.debt?'<span class="hooks">'+'🪝'.repeat(Math.min(r.debt,4))+'</span>':'')+'</div>'+
-    '<div class="bldg">'+r.emo+'<span class="lvt">'+r.lv+'</span></div>'+
-    '<div class="pts">'+r.score+'</div></div>').join('');
-  if(S.event&&S.day!==seen&&seen!==-1)show(S.event);
-  seen=S.day;
+  var rows=S.rows.slice().sort(function(a,b){return b.score-a.score||b.cash-a.cash;});
+  document.getElementById('lanes').innerHTML=rows.map(function(r,k){
+    return '<div class="lane'+(k===0&&r.score>0?' lead':'')+'">'+
+      '<div class="lname">'+esc(r.name)+(r.debt?'<span class="hooks">'+
+        '🪝'.repeat(Math.min(r.debt,4))+'</span>':'')+'</div>'+
+      '<div class="bldg">'+r.emo+'<span class="lvt">'+r.lv+'</span></div>'+
+      '<div class="pts">'+r.score+'</div></div>';}).join('');
+  if(S.event&&S.day!==lastEvDay&&lastEvDay!==-1) showEv(S.event);
+  lastEvDay=S.day;
 }
-function show(e){
-  document.querySelectorAll('.ev').forEach(x=>x.remove());
-  const d=document.createElement('div');d.className='ev';
-  d.innerHTML='<div><div class="i">'+e.icon+'</div><div class="t">'+e.title+'</div><div class="x">'+e.text+'</div></div>';
-  d.onclick=()=>d.remove();document.body.appendChild(d);
-  setTimeout(()=>d.parentNode&&d.remove(),9000);
+function showEv(e){
+  var old=document.querySelectorAll('.ev');
+  for(var i=0;i<old.length;i++) old[i].remove();
+  var d=document.createElement('div'); d.className='ev';
+  d.innerHTML='<div><div class="i">'+e.icon+'</div><div class="t">'+e.title+
+    '</div><div class="x">'+e.text+'</div></div>';
+  d.onclick=function(){ d.remove(); };
+  document.body.appendChild(d);
+  setTimeout(function(){ if(d.parentNode) d.remove(); },9000);
 }
-function host(){
-  document.getElementById('names').innerHTML=S.rows.map(r=>
-    '<div class="hrow"><input id="nm'+r.i+'" value="'+esc(r.name)+'"><button onclick="ren('+r.i+')">改</button></div>').join('');
-  document.getElementById('htab').innerHTML='<table><tr><th>公司</th><th></th><th>💰</th><th>📖</th><th>🪝</th><th>分</th></tr>'+
-    S.rows.map(r=>'<tr><td>'+esc(r.name)+'</td><td>'+r.emo+'</td><td>'+r.cash+'</td><td>'+r.word+'</td><td>'+r.debt+'</td><td><b>'+r.score+'</b></td></tr>').join('')+'</table>';
+function hostView(){
+  document.getElementById('hcode').textContent=room;
+  document.getElementById('url').textContent=location.origin+location.pathname+'?room='+room;
+  if(!S) return;
+  document.getElementById('names').innerHTML=S.rows.map(function(r){
+    return '<div class="hrow"><input id="nm'+r.i+'" value="'+esc(r.name)+
+      '"><button onclick="ren('+r.i+')">改</button></div>';}).join('');
+  document.getElementById('htab').innerHTML='<table><tr><th>公司</th><th></th><th>💰</th>'+
+    '<th>📖</th><th>🪝</th><th>分</th></tr>'+S.rows.map(function(r){
+      return '<tr><td>'+esc(r.name)+'</td><td>'+r.emo+'</td><td>'+r.cash+'</td><td>'+
+        r.word+'</td><td>'+r.debt+'</td><td><b>'+r.score+'</b></td></tr>';}).join('')+'</table>';
 }
-function ren(i){send({action:'rename',team:i,name:document.getElementById('nm'+i).value}).then(pull)}
+function ren(i){ send({action:'rename',team:i,name:document.getElementById('nm'+i).value}); }
+
 be(me&&(JOB[me]||me==='wall'||me==='host')?me:'who');
+setInterval(function(){ if(!isScreen()&&live) paint(); },2000);
 </script></body></html>
