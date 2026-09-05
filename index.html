@@ -44,6 +44,29 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 .tip{background:#FBF4E4;border-left:4px solid var(--goldD);border-radius:12px;padding:12px 14px;
  font-size:14.5px;line-height:1.65;color:var(--ink2);margin:-8px 0 16px}
 
+/* ---------- teacher guide ---------- */
+.row2{display:flex;gap:8px;align-items:center}
+.gtabs{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 4px}
+.gtabs button{border:none;border-radius:100px;padding:9px 14px;background:#fff;color:var(--ink);
+ font-family:var(--f);font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 1px 5px rgba(90,60,20,.09)}
+.gtabs button.on{background:var(--ink);color:#fff}
+.gtitle{font-size:22px;margin:14px 0 8px}
+.gc{background:#fff;border-radius:18px;padding:18px;margin-top:10px;box-shadow:0 2px 10px rgba(90,60,20,.08)}
+.gw{font-size:16px;color:var(--ink)}
+.gs{background:var(--ink);color:var(--gold);border-radius:14px;padding:14px 16px;margin-top:10px;
+ font-size:17px;line-height:1.6}
+.gh{font-size:12.5px;color:var(--goldD);letter-spacing:.08em;margin:16px 0 6px}
+.gc ul{padding-left:20px;font-size:15px;line-height:1.75;color:var(--ink2)}
+.gv{background:#FBF4E4;border-radius:12px;padding:11px 13px;margin-top:7px;font-size:15px;line-height:1.7;color:var(--ink)}
+.gv b{display:block;font-size:12.5px;color:var(--goldD);margin-bottom:2px}
+.gt{font-size:15px;line-height:1.7;color:var(--ink2)}
+.gn{margin-top:14px;padding-top:12px;border-top:1px dashed #E6DCC8;font-size:14px;line-height:1.7;color:var(--rockD)}
+.sd{display:flex;gap:12px;padding:12px 0;border-top:1px solid #F0E8D8;font-size:15px;line-height:1.65}
+.sd:first-of-type{border-top:none}
+.sdd{flex:none;width:64px;color:var(--goldD);font-size:13px;padding-top:2px}
+.sdt{color:var(--ink2)}
+.sdw{display:inline-block;margin-top:6px;background:#FBF4E4;border-radius:100px;padding:5px 12px;font-size:13px;color:var(--ink)}
+
 /* ---------- room code ---------- */
 .room{margin-top:20px}
 .codein{display:flex;gap:9px;margin-top:12px}
@@ -158,6 +181,9 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 .ev .i{font-size:clamp(80px,18vw,260px);line-height:1}
 .ev .t{font-size:clamp(38px,8vw,130px);font-weight:800;color:var(--gold);margin-top:2vh;letter-spacing:-.02em}
 .ev .x{font-size:clamp(18px,2.8vw,44px);margin-top:2.5vh;color:#E8DCC8;line-height:1.5}
+.ev .w2{display:inline-block;margin-top:3vh;background:rgba(255,255,255,.12);border-radius:100px;
+ padding:1.2vh 3vw;font-size:clamp(15px,2.2vw,34px);color:var(--gold)}
+.ev .go{font-size:clamp(12px,1.4vw,20px);color:#93826C;margin-top:4vh}
 
 /* ---------- host ---------- */
 .hrow{display:flex;gap:8px;margin-bottom:9px}
@@ -180,6 +206,7 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
   <div class="tag">教室里跑的实境游戏。学生分六组，走到四个关站跟老师互动，
     赚钱、拿经文、盖房子。十五分钟，房子最高的赢。</div>
   <button class="help" onclick="show('help')">📖 怎么玩？先看这个</button>
+  <button class="help" style="background:var(--grape);margin-top:10px" onclick="openGuide()">📕 老师手册：台词、经文、每天的剧本</button>
   <div class="tag" style="margin-top:22px">这台是什么？</div>
   <div class="who">
     <button class="b1" onclick="be('wall')"><span class="ic">🖥️</span>
@@ -253,6 +280,19 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
   <button class="big teal" onclick="show('who')">好，我懂了</button>
 </div></div>
 
+<!-- TEACHER GUIDE -->
+<div class="v" id="guide"><div class="w">
+  <button class="swap" onclick="show('who')">← 回去</button>
+  <h1>老师手册</h1>
+  <div class="tag">每一站的台词、经文、什么时候按。关主的手机上也看得到（关站画面按「📕 手册」）。</div>
+  <div class="gtabs">
+    <button onclick="guideTab('work')">💰 市场</button><button onclick="guideTab('altar')">🙌 祭坛</button>
+    <button onclick="guideTab('build')">🏗️ 工地</button><button onclick="guideTab('tempt')">🪝 试探官</button>
+    <button onclick="guideTab('script')">📜 剧本</button></div>
+  <div id="gbody"></div>
+  <button class="big teal" onclick="show('who')">回首页</button>
+</div></div>
+
 <!-- JOIN (phones) -->
 <div class="v" id="join"><div class="w">
   <button class="swap" onclick="be('who')">← 换</button>
@@ -268,9 +308,11 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
 
 <!-- ONE JOB -->
 <div class="v" id="job"><div class="w">
-  <button class="swap" onclick="be('who')">← 换</button>
+  <div class="row2"><button class="swap" onclick="be('who')">← 换</button>
+    <button class="swap" id="jgbtn" onclick="toggleGuide()">📕 手册</button></div>
   <div class="top"><span class="t" id="jt"></span><span class="d" id="jd">—</span></div>
   <div class="tip" id="jtip"></div>
+  <div id="jguide"></div>
   <div id="jerr"></div>
   <div id="say"></div>
   <div class="pick" id="pick"></div>
@@ -339,12 +381,72 @@ var BUILD={1:10,2:20,3:30};
 var FAMINE=[6,7], GRACE=12, DEBTDAY=13;
 var LV_NAME={1:'帐篷',2:'木屋',3:'石屋',4:'城堡'};
 var LV_EMO={1:'⛺',2:'🛖',3:'🏠',4:'🏰'};
+/* 剧本：每一天大屏幕跳出来的场景。主持人照着念。who = 哪个关站受影响 */
 var EVENTS={
-  6:{icon:'🌵',title:'饥荒',text:'市场关闭两天。没得赚的时候，试探最好听。'},
-  8:{icon:'🌾',title:'市场重开',text:'饥荒过去了。'},
-  12:{icon:'🕊️',title:'恩典',text:'每间公司白白得到 1 张 📖。不是你赚的。'},
-  13:{icon:'💸',title:'还债日',text:'每一个 🪝，拆掉一层楼。钱买不回来。'},
-  15:{icon:'🏁',title:'第十五天',text:'结算。'}
+  1:{icon:'🚀',title:'出发',
+     text:'2026 年。六间公司刚成立，每家 10 块钱、一顶帐篷。经济不太好，但路还在。',
+     who:'💰 市场开 · 🙌 祭坛开 · 🏗️ 工地开 · 🪝 试探官开'},
+  3:{icon:'📱',title:'快钱广告',
+     text:'手机上全是「一天赚一万」的广告。有人开始到处找人签约。',
+     who:'🪝 试探官：主动走到各组去招人'},
+  6:{icon:'🌵',title:'饥荒',
+     text:'2026 年经济衰退，裁员潮来了。市场关门，两天没有人请人做工。没得赚的时候，快钱最好听。',
+     who:'💰 市场关门 ✗ · 🙌 祭坛照开 ✓ · 🪝 试探官最忙'},
+  8:{icon:'🌾',title:'市场重开',
+     text:'复苏了。工作回来了。',
+     who:'💰 市场开 ✓'},
+  10:{icon:'🏗️',title:'建筑潮',
+     text:'大家都在盖楼。根基稳不稳，还要三天才知道。',
+     who:'🏗️ 工地：排队的时候，问问他们签过约没有'},
+  12:{icon:'🕊️',title:'恩典',
+     text:'有人白白送了每间公司一份礼物。不是你们赚的。',
+     who:'🙌 每间公司 +1 📖'},
+  13:{icon:'💸',title:'还债日',
+     text:'账单来了。当初签的每一张，现在都要还。信用卡、贷款、那些「没有人会知道」的合约。',
+     who:'🏗️ 每欠 1 个 🪝，拆掉一层楼。钱买不回来。'},
+  15:{icon:'🏁',title:'结算',
+     text:'2026 年结束。看看谁的房子还站着。',
+     who:'全部关站停止'}
+};
+/* 老师手册：每一站的台词、经文、动作、什么时候按 */
+var GUIDE={
+  work:{who:'你是工头。',
+    say:'「来，做完这个，工钱 5 块。」',
+    tasks:['全组十个开合跳','背出十诫的任何三条','用三句话讲一个圣经故事','全组一起唱一段诗歌','两人一组，互相说一句鼓励的话'],
+    verses:[['歌罗西书 3:23','无论做什么，都要从心里做，像是给主做的，不是给人做的。'],
+            ['帖撒罗尼迦后书 3:10','若有人不肯做工，就不可吃饭。']],
+    tap:'任务做完了，点他们的公司，按「给 5 💰」。一次一组，不预支。',
+    note:'第 6、7 天饥荒，你的按钮会自己关掉。那两天跟他们说：「没工作了，去别的地方看看吧。」'},
+  altar:{who:'你是祭司。',
+    say:'「双手举高，大声念。念给全教室听。」',
+    tasks:['全组一起、双手举高、念完一整节','念得小声或没举手，叫他们再来一次','每次换一节，别让他们背同一句'],
+    verses:[['诗篇 119:105','你的话是我脚前的灯，是我路上的光。'],
+            ['申命记 8:3','人活着不是单靠食物，乃是靠耶和华口里所出的一切话。'],
+            ['诗篇 119:11','我将你的话藏在心里，免得我得罪你。'],
+            ['以弗所书 6:17','拿着圣灵的宝剑，就是神的道。'],
+            ['马太福音 6:33','你们要先求他的国和他的义，这些东西都要加给你们了。'],
+            ['哥林多前书 10:13','神是信实的，必不叫你们受试探过于所能受的；在受试探的时候，总要给你们开一条出路。'],
+            ['希伯来书 4:12','神的道是活泼的，是有功效的，比一切两刃的剑更快。'],
+            ['约书亚记 1:8','这律法书不可离开你的口，总要昼夜思想……你的道路就可以亨通。']],
+    tap:'念完了才按「给 1 张 📖」。',
+    note:'祭坛任何时候都开，饥荒也开。这是他们唯一稳定的地方。'},
+  build:{who:'你是包工头。',
+    say:'「钱带够了吗？盖上去就是你们的了。」',
+    tasks:['⛺ 帐篷 → 🛖 木屋：10 块','🛖 木屋 → 🏠 石屋：20 块','🏠 石屋 → 🏰 城堡：30 块'],
+    verses:[['马太福音 7:24-25','凡听见我这话就去行的，好比一个聪明人，把房子盖在磐石上；雨淋，水冲，风吹，撞着那房子，房子总不倒塌。'],
+            ['诗篇 127:1','若不是耶和华建造房屋，建造的人就枉然劳力。']],
+    tap:'点他们的公司。钱够，按钮才会亮。按下去，房子升一级，钱自动扣。',
+    note:'第 13 天之后，被拆楼的会跑来问能不能买回来。答案是不能。「钱买不回来。」'},
+  tempt:{who:'你是试探官。演坏一点。',
+    say:'「欸，过来。签这里，10 块马上给你。做工才 5 块，这里两倍。没有人会知道。」',
+    tasks:['他们要用 📖 赶你走，必须先大声说「经上记着说——」再念一节经文，念完你才按',
+           '他们选「自己撑」，你按 🎲，手机掷骰子，你把结果念出来',
+           '第 3 天起，主动走到各组去招人，别等他们来'],
+    verses:[['马太福音 4:10','撒但，退去吧！因为经上记着说：当拜主你的神，单要事奉他。'],
+            ['雅各书 4:7','务要抵挡魔鬼，魔鬼就必离开你们。'],
+            ['箴言 22:7','欠债的是债主的仆人。']],
+    tap:'念了神的话 → 按「📖 念出神的话」。要赌 → 按「🎲 自己撑撑看」。',
+    note:'第 13 天之后你的按钮会变：签了当场拆楼。讲清楚了再让他们选。'}
 };
 var BROKERS=['wss://broker.emqx.io:8084/mqtt','wss://broker.hivemq.com:8884/mqtt'];
 
@@ -633,7 +735,10 @@ function be(v){
     document.getElementById('joinT').textContent=(JOB[v]?JOB[v].t:'🎛️ 主持人');
     paint(); return; }
   if(JOB[v]){ show('job'); document.getElementById('jt').textContent=JOB[v].t;
-    document.getElementById('jtip').textContent=JOB[v].tip; connect(); paint(); return; }
+    document.getElementById('jtip').textContent=JOB[v].tip;
+    guideOpen=false; document.getElementById('jguide').innerHTML='';
+    document.getElementById('jgbtn').textContent='📕 手册';
+    connect(); paint(); return; }
   if(v==='host'){
     show('host');
     document.getElementById('gate').style.display=pin?'none':'block';
@@ -717,6 +822,44 @@ function paint(){
       '<button class="do will" onclick="hit(\'will\')"'+(off?' disabled':'')+
         '>🎲 自己撑撑看<span class="s">掷到 1 或 2 才撑得住</span></button></div>';
   }
+}
+function openGuide(){ show('guide'); guideTab('work'); window.scrollTo(0,0); }
+function guideTab(k){
+  var b=document.getElementById('gbody');
+  var tabs=document.querySelectorAll('.gtabs button');
+  for(var i=0;i<tabs.length;i++) tabs[i].classList.toggle('on', tabs[i].getAttribute('onclick').indexOf("'"+k+"'")>=0);
+  if(k==='script'){
+    b.innerHTML='<div class="gc"><div class="gw">大屏幕每一天会自己跳出来。主持人照着念，念完点一下。</div>'+
+      '<div class="gh">2026 年，十五天</div>'+scriptTable()+'</div>';
+    return;
+  }
+  b.innerHTML='<div class="gtitle">'+JOB[k].t+'</div>'+guideCard(k);
+}
+function guideCard(role){
+  var g=GUIDE[role]; if(!g) return '';
+  return '<div class="gc"><div class="gw">'+esc(g.who)+'</div>'+
+    '<div class="gs">'+esc(g.say)+'</div>'+
+    '<div class="gh">'+(role==='build'?'价目':role==='tempt'?'规矩':'任务，挑一个')+'</div>'+
+    '<ul>'+g.tasks.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>'+
+    '<div class="gh">'+(role==='altar'?'给学生念的经文，轮着用':'经文')+'</div>'+
+    g.verses.map(function(v){return '<div class="gv"><b>'+esc(v[0])+'</b>'+esc(v[1])+'</div>';}).join('')+
+    '<div class="gh">什么时候按</div><div class="gt">'+esc(g.tap)+'</div>'+
+    '<div class="gn">'+esc(g.note)+'</div></div>';
+}
+var guideOpen=false;
+function toggleGuide(){
+  guideOpen=!guideOpen;
+  var el=document.getElementById('jguide');
+  if(el) el.innerHTML=guideOpen&&JOB[me]?guideCard(me):'';
+  var b=document.getElementById('jgbtn'); if(b) b.textContent=guideOpen?'收起手册':'📕 手册';
+}
+function scriptTable(){
+  var out='';
+  for(var d=1;d<=DAYS;d++){ var e=EVENTS[d]; if(!e) continue;
+    out+='<div class="sd"><div class="sdd">第 '+d+' 天</div><div>'+
+      '<b>'+e.icon+' '+esc(e.title)+'</b><div class="sdt">'+esc(e.text)+'</div>'+
+      '<div class="sdw">'+esc(e.who)+'</div></div></div>'; }
+  return out;
 }
 function pickTeam(i){ T=i; localStorage.setItem('team',i); paint(); }
 /* 房间号打错了要能改回来，不然只能清浏览器资料 */
@@ -815,10 +958,12 @@ function showEv(e){
   for(var i=0;i<old.length;i++) old[i].remove();
   var d=document.createElement('div'); d.className='ev';
   d.innerHTML='<div><div class="i">'+e.icon+'</div><div class="t">'+e.title+
-    '</div><div class="x">'+e.text+'</div></div>';
+    '</div><div class="x">'+e.text+'</div>'+
+    (e.who?'<div class="w2">'+e.who+'</div>':'')+
+    '<div class="go">主持人念完，点一下继续</div></div>';
   d.onclick=function(){ d.remove(); };
   document.body.appendChild(d);
-  setTimeout(function(){ if(d.parentNode) d.remove(); },9000);
+  setTimeout(function(){ if(d.parentNode) d.remove(); },25000);
 }
 function hostView(){
   document.getElementById('hcode').textContent=room;
