@@ -1,0 +1,325 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>旷野公司</title><style>
+:root{--sand:#FFF6E2;--rock:#C0341F;--rockD:#7C1D0E;--teal:#0E7A57;--tealD:#08543A;
+--grape:#5B2A86;--gold:#F5B711;--goldD:#A87A06;--ink:#160A02;--ink2:#5B4634;
+--f:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Heiti SC",sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;font-family:var(--f);font-weight:800;color:var(--ink);
+background:var(--sand);-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+.v{display:none}.v.on{display:block}
+.w{max-width:560px;margin:0 auto;padding:22px 18px 34px}
+
+/* ---------- pick who you are ---------- */
+.who{display:grid;gap:12px;margin-top:26px}
+.who button{border:none;border-radius:20px;padding:22px 20px;text-align:left;cursor:pointer;
+ font-family:var(--f);font-weight:800;font-size:20px;color:#fff;display:flex;align-items:center;gap:16px;
+ transition:transform .18s cubic-bezier(.2,1.3,.4,1)}
+.who button:active{transform:scale(.97)}
+.who .ic{font-size:30px;line-height:1}
+.b1{background:var(--ink)}.b2{background:var(--goldD)}.b3{background:var(--grape)}
+.b4{background:var(--teal)}.b5{background:var(--rock)}.b6{background:#4A3728}
+h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
+.tag{font-size:15px;color:var(--ink2);margin-top:6px}
+
+/* ---------- one job screen ---------- */
+.top{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.top .t{font-size:22px;font-weight:800}
+.top .d{margin-left:auto;background:var(--ink);color:var(--gold);border-radius:100px;
+ padding:6px 14px;font-size:15px;font-variant-numeric:tabular-nums}
+.swap{background:none;border:none;font-family:var(--f);font-weight:800;font-size:15px;
+ color:var(--ink2);cursor:pointer;padding:4px 0;margin-bottom:14px}
+.pick{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.pick button{border:none;border-radius:16px;padding:16px 4px;background:#fff;color:var(--ink);
+ font-family:var(--f);font-weight:800;font-size:15px;cursor:pointer;line-height:1.3;
+ box-shadow:0 2px 8px rgba(90,60,20,.10);transition:transform .16s,box-shadow .16s}
+.pick button .e{display:block;font-size:26px;margin-bottom:3px}
+.pick button.on{background:var(--ink);color:#fff;transform:scale(1.03);
+ box-shadow:0 6px 18px rgba(22,10,2,.3)}
+.have{display:flex;gap:8px;justify-content:center;margin:16px 0 4px;flex-wrap:wrap;
+ font-size:16px;color:var(--ink2)}
+.have span{background:#fff;border-radius:100px;padding:7px 14px;box-shadow:0 1px 5px rgba(90,60,20,.09)}
+.do{width:100%;border:none;border-radius:22px;padding:26px 20px;margin-top:20px;
+ font-family:var(--f);font-weight:800;font-size:24px;color:#fff;cursor:pointer;
+ transition:transform .16s cubic-bezier(.2,1.3,.4,1),opacity .2s}
+.do:active{transform:scale(.975)}
+.do .s{display:block;font-size:14px;font-weight:800;opacity:.85;margin-top:5px}
+.do:disabled{opacity:.3;cursor:default}
+.do.work{background:var(--goldD)}.do.altar{background:var(--grape)}.do.build{background:var(--teal)}
+.do.word{background:var(--teal)}.do.will{background:#8A5A2B}
+.two{display:grid;gap:12px;margin-top:20px}
+.say{background:var(--rock);color:#fff;border-radius:20px;padding:20px;text-align:center;margin-bottom:4px}
+.say .q{font-size:19px;line-height:1.45}
+.say .m{font-size:34px;font-weight:800;margin-top:6px}
+.note{background:#fff;border-radius:20px;padding:24px 20px;margin-top:18px;text-align:center;
+ box-shadow:0 2px 10px rgba(90,60,20,.1)}
+.note .ic{font-size:44px;line-height:1}
+.note .h{font-size:19px;font-weight:800;margin-top:10px;color:var(--rockD)}
+.note .b{font-size:15px;color:var(--ink2);margin-top:10px;line-height:1.6}
+.note code{background:#F3EBDA;border-radius:8px;padding:3px 8px;font-size:14px;
+ font-family:ui-monospace,Menlo,monospace;display:inline-block;margin-top:4px}
+.out{margin-top:18px;text-align:center;font-size:19px;line-height:1.5;min-height:30px}
+.out.good{color:var(--tealD)}.out.bad{color:var(--rockD)}
+.dice{font-size:76px;text-align:center;margin-top:6px;animation:roll .55s cubic-bezier(.2,1.4,.4,1)}
+@keyframes roll{0%{transform:rotate(-180deg) scale(.3);opacity:0}100%{transform:none;opacity:1}}
+.pinrow{display:flex;gap:9px;margin-top:14px}
+.pinrow input{flex:1;font-family:var(--f);font-weight:800;font-size:22px;letter-spacing:.4em;
+ text-align:center;padding:14px;border:2px solid #E6DCC8;border-radius:16px;background:#fff}
+.pinrow button{border:none;border-radius:16px;padding:0 24px;background:var(--teal);color:#fff;
+ font-family:var(--f);font-weight:800;font-size:17px;cursor:pointer}
+
+/* ---------- the wall ---------- */
+#wall.on{display:flex;flex-direction:column;height:100vh;padding:2.4vh 3vw;overflow:hidden;background:var(--sand)}
+.wtop{display:flex;align-items:baseline;gap:2vw;margin-bottom:1.4vh;flex:none}
+.wday{font-size:clamp(26px,4.2vw,66px);font-weight:800;letter-spacing:-.02em}
+.wday i{font-style:normal;color:var(--ink2);font-size:.42em;font-weight:800}
+.wclock{margin-left:auto;font-size:clamp(16px,2.2vw,34px);color:var(--ink2);font-variant-numeric:tabular-nums}
+.wexit{background:none;border:none;font-family:var(--f);font-weight:800;color:#C7B9A2;
+ font-size:clamp(12px,1.4vw,20px);cursor:pointer}
+.lanes{flex:1;display:flex;flex-direction:column;gap:1.1vh;justify-content:center;min-height:0}
+.lane{display:grid;grid-template-columns:2.4fr auto 1fr;gap:2vw;align-items:center;
+ background:#fff;border-radius:20px;padding:1.15vh 2vw;box-shadow:0 2px 10px rgba(90,60,20,.09);min-height:0;
+ transition:transform .6s cubic-bezier(.2,1,.3,1)}
+.lane.lead{background:var(--ink);color:#fff}
+.lname{font-size:clamp(16px,2.1vw,33px);font-weight:800;display:flex;align-items:center;gap:.5vw;
+ overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hooks{color:var(--rock);font-size:.72em}
+.lane.lead .hooks{color:#FF9B7D}
+.bldg{display:flex;align-items:center;gap:.5vw;font-size:clamp(22px,3.3vw,52px);line-height:1}
+.bldg .lvt{font-size:.32em;font-weight:800;color:var(--ink2)}
+.lane.lead .bldg .lvt{color:#C9BBA8}
+.pts{text-align:right;font-size:clamp(23px,3.3vw,54px);font-weight:800;font-variant-numeric:tabular-nums;
+ letter-spacing:-.02em}
+.wrule{text-align:center;font-size:clamp(13px,1.6vw,24px);color:var(--ink2);margin-top:1.4vh;flex:none}
+.wait{position:absolute;inset:0;display:grid;place-items:center;background:var(--sand);
+ font-size:clamp(20px,3vw,48px);color:var(--ink2)}
+.ev{position:fixed;inset:0;z-index:90;display:grid;place-items:center;text-align:center;
+ background:var(--ink);color:#fff;padding:8vh 8vw;cursor:pointer;animation:fade .4s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.ev .i{font-size:clamp(80px,18vw,260px);line-height:1}
+.ev .t{font-size:clamp(38px,8vw,130px);font-weight:800;color:var(--gold);margin-top:2vh;letter-spacing:-.02em}
+.ev .x{font-size:clamp(18px,2.8vw,44px);margin-top:2.5vh;color:#E8DCC8;line-height:1.5}
+
+/* ---------- host ---------- */
+.hrow{display:flex;gap:8px;margin-bottom:9px}
+.hrow input{flex:1;font-family:var(--f);font-weight:800;font-size:16px;padding:11px 13px;
+ border:2px solid #E6DCC8;border-radius:14px;background:#fff}
+.hrow button{border:none;border-radius:14px;padding:0 18px;background:var(--teal);color:#fff;
+ font-family:var(--f);font-weight:800;font-size:15px;cursor:pointer}
+.ctl{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:6px}
+.ctl button{border:none;border-radius:16px;padding:18px;font-family:var(--f);font-weight:800;
+ font-size:17px;color:#fff;cursor:pointer;background:var(--ink)}
+.ctl button.go{background:var(--teal)}.ctl button.warn{background:var(--rock)}
+.url{background:#fff;border-radius:16px;padding:16px;font-size:17px;color:var(--tealD);
+ word-break:break-all;margin-top:6px}
+table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;border-radius:14px;overflow:hidden}
+th{background:var(--ink);color:#fff;padding:9px;font-size:13px;font-weight:800}
+td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
+</style></head><body>
+
+<!-- WHO -->
+<div class="v on" id="who"><div class="w">
+  <h1>旷野公司</h1><div class="tag">你是谁？</div>
+  <div class="who">
+    <button class="b1" onclick="be('wall')"><span class="ic">🖥️</span>大屏幕</button>
+    <button class="b2" onclick="be('work')"><span class="ic">💰</span>市场</button>
+    <button class="b3" onclick="be('altar')"><span class="ic">🙌</span>祭坛</button>
+    <button class="b4" onclick="be('build')"><span class="ic">🏗️</span>工地</button>
+    <button class="b5" onclick="be('tempt')"><span class="ic">🪝</span>试探官</button>
+    <button class="b6" onclick="be('host')"><span class="ic">🎛️</span>主持人</button>
+  </div>
+</div></div>
+
+<!-- ONE JOB -->
+<div class="v" id="job"><div class="w">
+  <button class="swap" onclick="be('who')">← 换</button>
+  <div class="top"><span class="t" id="jt"></span><span class="d" id="jd">—</span></div>
+  <div id="say"></div>
+  <div id="jerr"></div>
+  <div class="pick" id="pick"></div>
+  <div class="have" id="have"></div>
+  <div id="btns"></div>
+  <div class="out" id="out"></div>
+</div></div>
+
+<!-- WALL -->
+<div class="v" id="wall">
+  <div class="wtop"><span class="wday" id="wd">第 0 天 <i>/ 15</i></span>
+    <span class="wclock" id="wc"></span><button class="wexit" onclick="be('who')">换</button></div>
+  <div class="lanes" id="lanes"></div>
+  <div class="wrule" id="wr"></div>
+  <div class="wait" id="wait">等主持人开始</div>
+</div>
+
+<!-- HOST -->
+<div class="v" id="host"><div class="w">
+  <button class="swap" onclick="be('who')">← 换</button>
+  <h1>主持人</h1>
+  <div id="gate">
+    <div class="tag" style="margin-top:14px">输入密码</div>
+    <div class="pinrow"><input id="pin" inputmode="numeric" placeholder="••••">
+      <button onclick="gate()">进</button></div>
+    <div id="gerr"></div>
+  </div>
+  <div id="panel" style="display:none">
+    <div id="herr"></div>
+    <div class="tag" style="margin-top:14px">大家开这个</div>
+    <div class="url" id="url"></div>
+    <div class="ctl" style="margin-top:18px">
+      <button class="go" onclick="cmd('start')">▶︎ 开始</button>
+      <button onclick="cmd('pause')">⏸ 暂停</button>
+      <button onclick="cmd('skip')">⏩ 下一天</button>
+      <button onclick="cmd('undo')">↩︎ 撤销</button>
+    </div>
+    <div class="tag" style="margin-top:20px">公司名字</div>
+    <div id="names" style="margin-top:8px"></div>
+    <div id="htab"></div>
+    <div class="ctl" style="grid-template-columns:1fr;margin-top:14px">
+      <button class="warn" onclick="if(confirm('全部归零？'))cmd('reset')">归零</button></div>
+  </div>
+</div></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ↓↓↓  上 GitHub 前，把引号里贴上你的 Apps Script 网址  ↓↓↓
+   例：const API="https://script.google.com/macros/s/AKfy.../exec";
+   只有这一行要改。要临时换别的后端，网址后面加 ?api=...
+   ═══════════════════════════════════════════════════════════ */
+const API="";
+const api=new URLSearchParams(location.search).get('api')||API||'/api';
+const JOB={work:{t:'💰 市场'},altar:{t:'🙌 祭坛'},build:{t:'🏗️ 工地'},tempt:{t:'🪝 试探官'}};
+let me=localStorage.getItem('me')||'', pin=localStorage.getItem('pin')||'',
+    T=localStorage.getItem('team')!==null?Number(localStorage.getItem('team')):null,
+    S=null, tick=null, live=null;
+
+function esc(x){return String(x).replace(/[&<>"']/g,
+  c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function pickTeam(i){T=i;localStorage.setItem('team',i);paint()}
+
+function be(v){
+  if(JOB[v]||v==='wall'||v==='host') me=v, localStorage.setItem('me',v);
+  if(v==='who') localStorage.removeItem('me');
+  document.querySelectorAll('.v').forEach(x=>x.classList.remove('on'));
+  document.getElementById(v==='wall'?'wall':v==='host'?'host':JOB[v]?'job':'who').classList.add('on');
+  if(tick){clearInterval(tick);tick=null}
+  if(JOB[v]){document.getElementById('jt').textContent=JOB[v].t;pull();tick=setInterval(pull,2500)}
+  if(v==='wall'){pull();tick=setInterval(pull,1500)}
+  if(v==='host'){document.getElementById('url').textContent=location.origin+location.pathname;
+    document.getElementById('gate').style.display=pin?'none':'block';
+    document.getElementById('panel').style.display=pin?'block':'none';
+    pull();tick=setInterval(pull,1500)}
+}
+function gate(){pin=(document.getElementById('pin').value||'').trim();
+  const g=document.getElementById('gerr'); g.innerHTML='';
+  fetch(api+'?action=ping&pin='+encodeURIComponent(pin)).then(r=>r.json()).then(d=>{
+    if(d.ok){localStorage.setItem('pin',pin);be('host')}
+    else{pin='';g.innerHTML='<div class="out bad" style="margin-top:14px">密码不对</div>'}})
+   .catch(()=>{pin='';g.innerHTML=notice()})}
+function cmd(a){fetch(api+'?action='+a+'&pin='+encodeURIComponent(pin)).then(pull)}
+function send(b){return fetch(api,{method:'POST',body:JSON.stringify(Object.assign({pin:pin},b))}).then(r=>r.json())}
+function pull(){fetch(api+'?t='+Date.now()).then(r=>r.json())
+  .then(d=>{S=d;live=true;paint()})
+  .catch(()=>{live=false;paint()})}
+function notice(){
+  if(!api||api==='/api')
+    return '<div class="note"><div class="ic">🔌</div>'+
+      '<div class="h">还没接上后端</div><div class="b">'+
+      '打开 <code>index.html</code>，把开头那一行<br><code>const API="";</code><br>'+
+      '换成你的 Apps Script 网址，再上传一次。</div></div>';
+  return '<div class="note"><div class="ic">📡</div>'+
+    '<div class="h">连不上后端</div><div class="b">'+
+    '先确认手机有网络。<br>还是不行的话，Apps Script 那边要是<br>'+
+    '「部署 → 存取权限：任何人」，<br>而且改过 Code.gs 要重新部署新版本。</div></div>';
+}
+
+function paint(){
+  const band = live===false ? notice() : '';   // 只贴在自己的格子里，不要盖掉整个面板
+  const he=document.getElementById('herr'); if(he) he.innerHTML=(me==='host'&&pin)?band:'';
+  const je=document.getElementById('jerr'); if(je) je.innerHTML=JOB[me]?band:'';
+  if(!S){
+    if(me==='wall'){
+      document.getElementById('wait').style.display='grid';
+      document.getElementById('wait').innerHTML=live===false?notice():'连线中…';
+    } else if(JOB[me]){
+      document.getElementById('pick').innerHTML='';
+      document.getElementById('have').innerHTML='';
+      document.getElementById('say').innerHTML='';
+      document.getElementById('btns').innerHTML='';
+      document.getElementById('out').textContent='';
+    }
+    return;
+  }
+  if(me==='wall')return wall();
+  if(me==='host')return host();
+  if(!JOB[me])return;
+  document.getElementById('jd').textContent=S.started?('第 '+S.day+' 天'):'未开始';
+  document.getElementById('pick').innerHTML=S.rows.map(r=>
+    '<button class="'+(r.i===T?'on':'')+'" onclick="pickTeam('+r.i+')"><span class="e">'+r.emo+'</span>'+esc(r.name)+'</button>').join('');
+  const c=S.rows.find(r=>r.i===T);
+  document.getElementById('have').innerHTML=c?
+    ('<span>💰 '+c.cash+'</span><span>📖 '+c.word+'</span>'+(c.debt?'<span style="color:#C0341F">🪝 '+c.debt+'</span>':'')):'';
+  const sayEl=document.getElementById('say'); sayEl.innerHTML='';
+  const B=document.getElementById('btns'); const off=!c;
+  if(me==='work') B.innerHTML='<button class="do work" onclick="hit(\'work\')"'+((off||S.famine)?' disabled':'')+'>'+
+    (S.famine?'🌵 饥荒，市场关着':'给 '+S.work+' 💰')+'</button>';
+  if(me==='altar') B.innerHTML='<button class="do altar" onclick="hit(\'altar\')"'+(off?' disabled':'')+'>给 1 张 📖'+
+    '<span class="s">要先双手举高，大声念出经文</span></button>';
+  if(me==='build'){const can=c&&c.level<4&&c.cash>=c.cost;
+    B.innerHTML='<button class="do build" onclick="hit(\'build\')"'+(can?'':' disabled')+'>'+
+    (c?(c.level>=4?'已经是 🏰 城堡':'盖成 '+['','🛖 木屋','🏠 石屋','🏰 城堡'][c.level]):'盖楼')+
+    '<span class="s">'+(c&&c.level<4?'要 '+c.cost+' 💰':'')+'</span></button>';}
+  if(me==='tempt'){
+    sayEl.innerHTML='<div class="say"><div class="q">「签这里，现在就给你」</div><div class="m">+'+S.gain+' 💰</div></div>';
+    B.innerHTML='<div class="two">'+
+      '<button class="do word" onclick="hit(\'word\')"'+((c&&c.word>0)?'':' disabled')+'>📖 念出神的话'+
+        '<span class="s">'+((c&&c.word>0)?'一定赶走他':'手上没有 📖')+'</span></button>'+
+      '<button class="do will" onclick="hit(\'will\')"'+(off?' disabled':'')+'>🎲 自己撑撑看'+
+        '<span class="s">掷到 1 或 2 才撑得住</span></button></div>';
+  }
+}
+function hit(a){
+  document.getElementById('out').textContent='';
+  send({action:a,team:T}).then(d=>{
+    const o=document.getElementById('out');
+    if(!d.ok){o.className='out bad';o.textContent=d.error;return}
+    if(a==='will'){
+      const m=d.msg.match(/^🎲 (\d)\s*—\s*/);
+      o.innerHTML='<div class="dice">🎲 '+(m?m[1]:'')+'</div>'+esc(m?d.msg.slice(m[0].length):d.msg);
+      o.className='out '+(d.msg.indexOf('撑住')>0?'good':'bad');
+    } else {o.className='out good';o.textContent=d.msg}
+    pull();
+  });
+}
+let seen=-1;
+function wall(){
+  document.getElementById('wait').style.display=S.started?'none':'grid';
+  document.getElementById('wd').innerHTML='第 '+S.day+' 天 <i>/ '+S.days+'</i>';
+  const m=Math.floor(S.secs/60),s=S.secs%60;
+  document.getElementById('wc').textContent=S.started?(m+':'+String(s).padStart(2,'0')):'';
+  document.getElementById('wr').textContent=S.famine?'🌵 饥荒 — 市场关着':
+    '📖 念出神的话 一定赶走试探　🎲 自己撑 六次只成两次';
+  const rows=S.rows.slice().sort((a,b)=>b.score-a.score||b.cash-a.cash);
+  document.getElementById('lanes').innerHTML=rows.map((r,k)=>
+    '<div class="lane'+(k===0&&r.score>0?' lead':'')+'">'+
+    '<div class="lname">'+esc(r.name)+(r.debt?'<span class="hooks">'+'🪝'.repeat(Math.min(r.debt,4))+'</span>':'')+'</div>'+
+    '<div class="bldg">'+r.emo+'<span class="lvt">'+r.lv+'</span></div>'+
+    '<div class="pts">'+r.score+'</div></div>').join('');
+  if(S.event&&S.day!==seen&&seen!==-1)show(S.event);
+  seen=S.day;
+}
+function show(e){
+  document.querySelectorAll('.ev').forEach(x=>x.remove());
+  const d=document.createElement('div');d.className='ev';
+  d.innerHTML='<div><div class="i">'+e.icon+'</div><div class="t">'+e.title+'</div><div class="x">'+e.text+'</div></div>';
+  d.onclick=()=>d.remove();document.body.appendChild(d);
+  setTimeout(()=>d.parentNode&&d.remove(),9000);
+}
+function host(){
+  document.getElementById('names').innerHTML=S.rows.map(r=>
+    '<div class="hrow"><input id="nm'+r.i+'" value="'+esc(r.name)+'"><button onclick="ren('+r.i+')">改</button></div>').join('');
+  document.getElementById('htab').innerHTML='<table><tr><th>公司</th><th></th><th>💰</th><th>📖</th><th>🪝</th><th>分</th></tr>'+
+    S.rows.map(r=>'<tr><td>'+esc(r.name)+'</td><td>'+r.emo+'</td><td>'+r.cash+'</td><td>'+r.word+'</td><td>'+r.debt+'</td><td><b>'+r.score+'</b></td></tr>').join('')+'</table>';
+}
+function ren(i){send({action:'rename',team:i,name:document.getElementById('nm'+i).value}).then(pull)}
+be(me&&(JOB[me]||me==='wall'||me==='host')?me:'who');
+</script></body></html>
