@@ -23,6 +23,27 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 .b1{background:var(--ink)}.b2{background:var(--goldD)}.b3{background:var(--grape)}
 .b4{background:var(--teal)}.b5{background:var(--rock)}.b6{background:#4A3728}
 
+/* ---------- help ---------- */
+.help{display:block;width:100%;border:none;border-radius:18px;padding:18px;margin-top:16px;
+ background:var(--teal);color:#fff;font-family:var(--f);font-weight:800;font-size:18px;cursor:pointer}
+.hp{background:#fff;border-radius:18px;padding:18px;margin-top:12px;
+ box-shadow:0 2px 10px rgba(90,60,20,.08)}
+.hp>b{display:block;font-size:17px;margin-bottom:8px}
+.hp p{font-size:15px;line-height:1.75;color:var(--ink2);font-weight:800}
+.hp p+p{margin-top:8px}
+.hp ol{padding-left:22px;font-size:15px;line-height:1.8;color:var(--ink2)}
+.hp ol li{padding-left:4px}
+.st{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.7;color:var(--ink2);
+ padding:9px 0;border-top:1px solid #F0E8D8}
+.st:first-of-type{border-top:none;padding-top:0}
+.st>span{font-size:26px;line-height:1.2;flex:none}
+.st b{color:var(--ink);margin-right:6px}
+.big{display:block;width:100%;border:none;border-radius:20px;padding:20px;margin-top:16px;
+ font-family:var(--f);font-weight:800;font-size:20px;color:#fff;background:var(--ink);cursor:pointer}
+.big.teal{background:var(--teal)}
+.tip{background:#FBF4E4;border-left:4px solid var(--goldD);border-radius:12px;padding:12px 14px;
+ font-size:14.5px;line-height:1.65;color:var(--ink2);margin:-8px 0 16px}
+
 /* ---------- room code ---------- */
 .room{margin-top:20px}
 .codein{display:flex;gap:9px;margin-top:12px}
@@ -156,21 +177,80 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
 <!-- WHO -->
 <div class="v on" id="who"><div class="w">
   <h1>旷野公司</h1>
-  <div class="tag">十五天。六间公司。四个关站。<br>你是谁？</div>
+  <div class="tag">教室里跑的实境游戏。学生分六组，走到四个关站跟老师互动，
+    赚钱、拿经文、盖房子。十五分钟，房子最高的赢。</div>
+  <button class="help" onclick="show('help')">📖 怎么玩？先看这个</button>
+  <div class="tag" style="margin-top:22px">这台是什么？</div>
   <div class="who">
     <button class="b1" onclick="be('wall')"><span class="ic">🖥️</span>
-      <span>大屏幕<span class="sm">投影／电视。整场分数记在这台，全程不要关</span></span></button>
+      <span>大屏幕<span class="sm">接投影的那台电脑。先开这个，全程不要关</span></span></button>
     <button class="b2" onclick="be('work')"><span class="ic">💰</span>
-      <span>市场<span class="sm">关主手机</span></span></button>
+      <span>市场<span class="sm">老师的手机。学生做任务，你给钱</span></span></button>
     <button class="b3" onclick="be('altar')"><span class="ic">🙌</span>
-      <span>祭坛<span class="sm">关主手机</span></span></button>
+      <span>祭坛<span class="sm">老师的手机。学生念经文，你给「神的话」</span></span></button>
     <button class="b4" onclick="be('build')"><span class="ic">🏗️</span>
-      <span>工地<span class="sm">关主手机</span></span></button>
+      <span>工地<span class="sm">老师的手机。学生拿钱来，你帮他们盖房子</span></span></button>
     <button class="b5" onclick="be('tempt')"><span class="ic">🪝</span>
-      <span>试探官<span class="sm">关主手机</span></span></button>
+      <span>试探官<span class="sm">老师的手机。你演坏人，引诱他们签约</span></span></button>
     <button class="b6" onclick="be('host')"><span class="ic">🎛️</span>
-      <span>主持人<span class="sm">开始／暂停／改名／归零</span></span></button>
+      <span>主持人（另一支手机）<span class="sm">大屏幕上已经有主持按钮，这个是遥控用</span></span></button>
   </div>
+</div></div>
+
+<!-- HELP -->
+<div class="v" id="help"><div class="w">
+  <button class="swap" onclick="show('who')">← 回去</button>
+  <h1>怎么玩</h1>
+  <div class="hp">
+    <b>这是什么</b>
+    <p>一个在教室或礼堂里跑的游戏。学生分成六组，每组是一间「公司」。
+    教室里摆四个关站，每站一位老师拿手机。学生用脚走到关站，做老师出的任务，
+    老师在手机上按一下，投影上的分数就马上跳。</p>
+    <p>十五分钟结束。<b>房子盖最高的公司赢。</b></p>
+  </div>
+  <div class="hp">
+    <b>开场前，五步</b>
+    <ol>
+      <li>接投影的电脑开这个网址，选「🖥️ 大屏幕」，按 F11 全萤幕</li>
+      <li>投影上会出现<b>四个字母的房间号</b></li>
+      <li>四位老师手机开同一个网址，选自己的关站，输入那四个字母</li>
+      <li>学生分六组，各站一边。想改公司名字，在大屏幕上按 🎛️ 主持</li>
+      <li>大屏幕右上角 <b>🎛️ 主持</b> → 密码 → <b>▶︎ 开始</b></li>
+    </ol>
+  </div>
+  <div class="hp">
+    <b>四个关站，学生要做什么</b>
+    <div class="st"><span>💰</span><div><b>市场</b>做一个小任务（十个开合跳、答一题，你自己出），
+      老师给 <b>5 块钱</b></div></div>
+    <div class="st"><span>🙌</span><div><b>祭坛</b>全组双手举高、大声念一节经文，
+      老师给 <b>1 张「神的话」📖</b>。不用钱，随时可以来</div></div>
+    <div class="st"><span>🏗️</span><div><b>工地</b>拿钱来盖房子：
+      ⛺ 帐篷 → 🛖 木屋（10 块）→ 🏠 石屋（20 块）→ 🏰 城堡（30 块）</div></div>
+    <div class="st"><span>🪝</span><div><b>试探官</b>老师演坏人：「签这里，现在就给你 10 块」。
+      学生只有两条路 ——<br>
+      <b>念出神的话</b>：用掉 1 张 📖，坏人一定走<br>
+      <b>自己撑</b>：掷骰子，只有 1 和 2 撑得住。撑不住就签了，拿 10 块，
+      但<b>欠一个债 🪝</b></div></div>
+  </div>
+  <div class="hp">
+    <b>怎么算分</b>
+    <p><b>只有房子算分。</b>帐篷 0、木屋 10、石屋 20、城堡 30。<br>
+    钱不算分，钱只是拿来盖房子的。</p>
+  </div>
+  <div class="hp">
+    <b>十五天里会发生的事（大屏幕会自动跳出来）</b>
+    <p>🌵 第 6、7 天 <b>饥荒</b>：市场关门，赚不到钱。祭坛照开。<br>
+    🕊️ 第 12 天 <b>恩典</b>：每间公司白白得 1 张 📖。<br>
+    💸 第 13 天 <b>还债日</b>：每欠 1 个 🪝，<b>拆掉一层楼</b>。钱买不回来。之后再签约，当场拆。<br>
+    🏁 第 15 天结束。</p>
+  </div>
+  <div class="hp">
+    <b>这个游戏想讲的事</b>
+    <p>坏人给的钱比做工多一倍，看起来很划算。可是到了还债那天，
+    房子一层一层被拆掉，钱留着也没用。<br>
+    自己硬撑，六次只成两次。念出神的话，一次都没有失手过。</p>
+  </div>
+  <button class="big teal" onclick="show('who')">好，我懂了</button>
 </div></div>
 
 <!-- JOIN (phones) -->
@@ -190,6 +270,7 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
 <div class="v" id="job"><div class="w">
   <button class="swap" onclick="be('who')">← 换</button>
   <div class="top"><span class="t" id="jt"></span><span class="d" id="jd">—</span></div>
+  <div class="tip" id="jtip"></div>
   <div id="jerr"></div>
   <div id="say"></div>
   <div class="pick" id="pick"></div>
@@ -371,7 +452,12 @@ function host_(s,a){
 }
 
 /* ── 连线 ───────────────────────────────────────────────── */
-var JOB={work:{t:'💰 市场'},altar:{t:'🙌 祭坛'},build:{t:'🏗️ 工地'},tempt:{t:'🪝 试探官'}};
+var JOB={
+  work: {t:'💰 市场',  tip:'学生来做一个小任务（十个开合跳、答一题，你出）。做完了，点他们的公司，按「给 5 💰」。'},
+  altar:{t:'🙌 祭坛',  tip:'学生要全组双手举高、大声念一节经文。念完了，点他们的公司，按「给 1 张 📖」。'},
+  build:{t:'🏗️ 工地', tip:'学生带钱来盖房子。点他们的公司，钱够按钮就会亮。按下去，房子升一级。'},
+  tempt:{t:'🪝 试探官',tip:'你演坏人。对他们说：「签这里，现在就给你 10 块，没有人会知道。」然后让他们选。'}
+};
 var me=localStorage.getItem('me')||'', pin=localStorage.getItem('pin')||'';
 var room=(new URLSearchParams(location.search).get('room')||localStorage.getItem('room')||'').toUpperCase();
 var T=localStorage.getItem('team')!==null?Number(localStorage.getItem('team')):null;
@@ -408,7 +494,9 @@ function connect(){
 function closeAll(){
   for(var i=0;i<conns.length;i++){
     var c=conns[i];
-    if(c&&c.client){ try{ c.client.removeAllListeners(); c.client.end(true); }catch(e){} }
+    // 不要 removeAllListeners()：那会把函式库自己的内部监听一起拔掉，
+    // 它收尾的时候就会在里面抛错。旧连线的事件靠 gen 挡掉就好。
+    if(c&&c.client){ try{ c.client.end(true); }catch(e){} }
   }
   conns=[];
 }
@@ -544,7 +632,8 @@ function be(v){
   if((JOB[v]||v==='host') && !room){ show('join');
     document.getElementById('joinT').textContent=(JOB[v]?JOB[v].t:'🎛️ 主持人');
     paint(); return; }
-  if(JOB[v]){ show('job'); document.getElementById('jt').textContent=JOB[v].t; connect(); paint(); return; }
+  if(JOB[v]){ show('job'); document.getElementById('jt').textContent=JOB[v].t;
+    document.getElementById('jtip').textContent=JOB[v].tip; connect(); paint(); return; }
   if(v==='host'){
     show('host');
     document.getElementById('gate').style.display=pin?'none':'block';
@@ -653,12 +742,13 @@ function wall(){
   var w=document.getElementById('wait');
   if(!S||!S.started){
     w.style.display='grid';
-    w.innerHTML='<div><div class="big">手机开这个网址</div>'+
+    w.innerHTML='<div><div class="big">老师们，手机开这个网址</div>'+
       '<div class="url">'+esc(joinUrl)+'</div>'+
-      '<div class="big" style="margin-top:3vh">或输入房间号</div>'+
+      '<div class="big" style="margin-top:2.5vh">选自己的关站，输入房间号</div>'+
       '<div class="code">'+room+'</div>'+
       '<div class="big" style="font-size:clamp(15px,2vw,30px)">'+
-      (live===false?'⚠️ 中继连不上，检查这台的网络':'主持人按「开始」就出发')+'</div>'+
+      (live===false?'⚠️ 中继连不上，检查这台的网络'
+        :'都进来了？右上角 🎛️ 主持 → 密码 → ▶︎ 开始')+'</div>'+
       '<button class="waitout" onclick="be(\'who\')">← 我不是大屏幕，换身份</button></div>';
     if(!S) return;
   } else if(live===false){

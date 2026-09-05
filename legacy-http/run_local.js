@@ -46,7 +46,7 @@ http.createServer((req, res) => {
   // 每次都重新读档，改了档案重整就看得到
   const name = (u.pathname === '/' ? 'index.html' : path.basename(u.pathname)) || 'index.html';
   try {
-    send(res, 200, 'text/html; charset=utf-8', fs.readFileSync(path.join(HERE, name)));
+    send(res, 200, 'text/html; charset=utf-8', fs.readFileSync(path.join(HERE, '..', name)));
   } catch (e) {
     send(res, 404, 'text/plain; charset=utf-8', '找不到 ' + name);
   }
