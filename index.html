@@ -255,14 +255,14 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
   <div class="hp">
     <b>四个关站，学生要做什么</b>
     <div class="st"><span>💰</span><div><b>市场</b>做一个小任务（十个开合跳、答一题，你自己出），
-      老师给 <b>5 块钱</b></div></div>
+      老师给 <b>10 块钱</b></div></div>
     <div class="st"><span>🙌</span><div><b>祭坛</b>全组双手举高、大声念一节经文，
       老师给 <b>1 张「神的话」📖</b>。不用钱，随时可以来</div></div>
     <div class="st"><span>🏗️</span><div><b>工地</b>拿钱来盖房子：
       ⛺ 帐篷 → 🛖 木屋（10 块）→ 🏠 石屋（20 块）→ 🏰 城堡（30 块）</div></div>
-    <div class="st"><span>🪝</span><div><b>试探官</b>老师演坏人：「签这里，现在就给你 10 块」。
+    <div class="st"><span>🪝</span><div><b>试探官</b>老师演坏人：「签这里，现在就给你 20 块」。
       学生有三条路 ——<br>
-      <b>签</b>：拿 10 块，但<b>欠一个债 🪝</b><br>
+      <b>签</b>：拿 20 块，但<b>欠一个债 🪝</b><br>
       <b>念出神的话</b>：用掉 1 张 📖，坏人一定走<br>
       <b>自己撑</b>：掷骰子，只有 1 和 2 撑得住。撑不住就等于签了</div></div>
   </div>
@@ -274,8 +274,10 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
   <div class="hp">
     <b>十五天里会发生的事（大屏幕会自动跳出来）</b>
     <p>🌵 第 6、7 天 <b>饥荒</b>：市场关门，赚不到钱。祭坛照开。<br>
+    🌪️ 第 9 天 <b>风暴</b>：手上有 📖 的花一张站住，没有的<b>塌一层</b>。城堡也一样。<br>
     🕊️ 第 12 天 <b>恩典</b>：每间公司白白得 1 张 📖。<br>
     💸 第 13 天 <b>还债日</b>：每欠 1 个 🪝，<b>拆掉一层楼</b>。钱买不回来。之后再签约，当场拆。<br>
+    🌪️ 第 14 天 <b>最后一场风暴</b>：跟第 9 天一样。所以盖好城堡也不能不去祭坛。<br>
     🏁 第 15 天结束。</p>
   </div>
   <div class="hp">
@@ -383,15 +385,15 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
    规则跟 Code.gs 一模一样，只是搬到浏览器里跑。
    ═══════════════════════════════════════════════════════════════ */
 var PIN='4717', N=6, DAYS=15, DAY_MS=60000;
-var START_CASH=10, WORK=5, GAIN=10, MAX=4, LEVEL_PTS=10;
+var START_CASH=20, WORK=10, GAIN=20, MAX=4, LEVEL_PTS=10;
 var BUILD={1:10,2:20,3:30};
-var FAMINE=[6,7], GRACE=12, DEBTDAY=13;
+var FAMINE=[6,7], GRACE=12, DEBTDAY=13, STORM=[9,14];
 var LV_NAME={1:'帐篷',2:'木屋',3:'石屋',4:'城堡'};
 var LV_EMO={1:'⛺',2:'🛖',3:'🏠',4:'🏰'};
 /* 剧本：每一天大屏幕跳出来的场景。主持人照着念。who = 哪个关站受影响 */
 var EVENTS={
   1:{icon:'🚀',title:'出发',
-     text:'2026 年。六间公司刚成立，每家 10 块钱、一顶帐篷。经济不太好，但路还在。',
+     text:'2026 年。六间公司刚成立，每家 20 块钱、一顶帐篷。经济不太好，但路还在。',
      who:'💰 市场开 · 🙌 祭坛开 · 🏗️ 工地开 · 🪝 试探官开'},
   3:{icon:'📱',title:'快钱广告',
      text:'手机上全是「一天赚一万」的广告。有人开始到处找人签约。',
@@ -402,6 +404,9 @@ var EVENTS={
   8:{icon:'🌾',title:'市场重开',
      text:'复苏了。工作回来了。',
      who:'💰 市场开 ✓'},
+  9:{icon:'🌪️',title:'风暴',
+     text:'雨淋，水冲，风吹，撞着那房子。有 📖 的花一张，站住了。没有的，塌一层。',
+     who:'🙌 手上有 📖 才站得住 · 🏗️ 没有的塌一层'},
   10:{icon:'🏗️',title:'建筑潮',
      text:'大家都在盖楼。根基稳不稳，还要三天才知道。',
      who:'🏗️ 工地：排队的时候，问问他们签过约没有'},
@@ -411,6 +416,9 @@ var EVENTS={
   13:{icon:'💸',title:'还债日',
      text:'账单来了。当初签的每一张，现在都要还。信用卡、贷款、那些「没有人会知道」的合约。',
      who:'🏗️ 每欠 1 个 🪝，拆掉一层楼。钱买不回来。'},
+  14:{icon:'🌪️',title:'最后一场风暴',
+     text:'第二次。雨淋，水冲，风吹。第 12 天白白给的那张 📖，现在就是为了这个。',
+     who:'🙌 手上有 📖 才站得住 · 🏗️ 没有的塌一层'},
   15:{icon:'🏁',title:'结算',
      text:'2026 年结束。看看谁的房子还站着。',
      who:'全部关站停止'}
@@ -418,11 +426,11 @@ var EVENTS={
 /* 老师手册：每一站的台词、经文、动作、什么时候按 */
 var GUIDE={
   work:{who:'你是工头。',
-    say:'「来，做完这个，工钱 5 块。」',
+    say:'「来，做完这个，工钱 10 块。」',
     tasks:['全组十个开合跳','背出十诫的任何三条','用三句话讲一个圣经故事','全组一起唱一段诗歌','两人一组，互相说一句鼓励的话'],
     verses:[['歌罗西书 3:23','无论做什么，都要从心里做，像是给主做的，不是给人做的。'],
             ['帖撒罗尼迦后书 3:10','若有人不肯做工，就不可吃饭。']],
-    tap:'任务做完了，点他们的公司，按「给 5 💰」。一次一组，不预支。',
+    tap:'任务做完了，点他们的公司，按「给 10 💰」。一次一组，不预支。',
     note:'第 6、7 天饥荒，你的按钮会自己关掉。那两天跟他们说：「没工作了，去别的地方看看吧。」'},
   altar:{who:'你是祭司。',
     say:'「双手举高，大声念。念给全教室听。」',
@@ -436,16 +444,16 @@ var GUIDE={
             ['希伯来书 4:12','神的道是活泼的，是有功效的，比一切两刃的剑更快。'],
             ['约书亚记 1:8','这律法书不可离开你的口，总要昼夜思想……你的道路就可以亨通。']],
     tap:'念完了才按「给 1 张 📖」。',
-    note:'祭坛任何时候都开，饥荒也开。这是他们唯一稳定的地方。'},
+    note:'祭坛任何时候都开，饥荒也开。第 9 天和第 14 天有风暴，手上没 📖 的会塌一层 —— 盖好城堡的人也得回来拿。'},
   build:{who:'你是包工头。',
     say:'「钱带够了吗？盖上去就是你们的了。」',
     tasks:['⛺ 帐篷 → 🛖 木屋：10 块','🛖 木屋 → 🏠 石屋：20 块','🏠 石屋 → 🏰 城堡：30 块'],
     verses:[['马太福音 7:24-25','凡听见我这话就去行的，好比一个聪明人，把房子盖在磐石上；雨淋，水冲，风吹，撞着那房子，房子总不倒塌。'],
             ['诗篇 127:1','若不是耶和华建造房屋，建造的人就枉然劳力。']],
     tap:'点他们的公司。钱够，按钮才会亮。按下去，房子升一级，钱自动扣。',
-    note:'第 13 天之后，被拆楼的会跑来问能不能买回来。答案是不能。「钱买不回来。」'},
+    note:'第 9、14 天风暴，没 📖 的塌一层；第 13 天每个 🪝 拆一层。被拆的会来问能不能买回来。答案是不能。「钱买不回来。」'},
   tempt:{who:'你是试探官。演坏一点。',
-    say:'「欸，过来。签这里，10 块马上给你。做工才 5 块，这里两倍。没有人会知道。」',
+    say:'「欸，过来。签这里，20 块马上给你。做工才 10 块，这里两倍。没有人会知道。」',
     tasks:['他们真的要签，按红色那颗。钱马上给，债记下来',
            '他们要用 📖 赶你走，必须先大声说「经上记着说——」再念一节经文，念完你才按',
            '他们选「自己撑」，你按 🎲，手机掷骰子，你把结果念出来',
@@ -462,7 +470,7 @@ var BROKERS=['wss://broker.emqx.io:8084/mqtt','wss://broker.hivemq.com:8884/mqtt
 function fresh_(){
   var co=[];
   for(var i=0;i<N;i++) co.push({name:'第 '+(i+1)+' 公司',cash:START_CASH,word:0,debt:0,level:1});
-  return {start:null,pausedAt:null,paused:0,grace:false,collected:false,co:co,hist:[]};
+  return {start:null,pausedAt:null,paused:0,grace:false,collected:false,storms:[],co:co,hist:[]};
 }
 function elapsed_(s){
   if(!s.start) return 0;
@@ -472,19 +480,44 @@ function elapsed_(s){
 function day_(s){ return s.start ? Math.min(DAYS, Math.floor(elapsed_(s)/DAY_MS)+1) : 0; }
 function inFamine_(d){ return FAMINE.indexOf(d)>=0; }
 function push_(s){
-  s.hist.push(JSON.stringify({co:s.co,grace:s.grace,collected:s.collected}));
+  s.hist.push(JSON.stringify({co:s.co,grace:s.grace,collected:s.collected,storms:s.storms||[]}));
   while(s.hist.length>8) s.hist.shift();
 }
+/* 有真的改到东西才回 true。
+ *  事件一定按日期顺序套用（风暴 9 → 恩典 12 → 还债 13 → 风暴 14），
+ *  就算大屏幕关了几分钟再开、一口气跳好几天，顺序也不会乱。 */
 function auto_(s){
   var d=day_(s), ch=false;
-  if(d>=GRACE && !s.grace){ for(var i=0;i<N;i++) s.co[i].word++; s.grace=true; ch=true; }
-  if(d>=DEBTDAY){
-    for(var j=0;j<N;j++){
-      var c=s.co[j];
-      while(c.debt>0 && c.level>1){ c.debt--; c.level--; ch=true; }
-      if(c.debt!==0){ c.debt=0; ch=true; }
+  if(!s.storms) s.storms=[];
+  var ev=[];
+  for(var k=0;k<STORM.length;k++) ev.push({day:STORM[k],kind:'storm'});
+  ev.push({day:GRACE,kind:'grace'});
+  ev.push({day:DEBTDAY,kind:'debt'});
+  ev.sort(function(a,b){ return a.day-b.day; });
+  for(var i=0;i<ev.length;i++){
+    var e=ev[i];
+    if(d<e.day) continue;
+    if(e.kind==='storm'){
+      if(s.storms.indexOf(e.day)>=0) continue;
+      for(var q=0;q<N;q++){ var cq=s.co[q];
+        if(cq.word>0) cq.word--;              // 根基在磐石上：花一张 📖，站住
+        else if(cq.level>1) cq.level--;       // 根基在沙土上：塌一层
+      }
+      s.storms.push(e.day); ch=true;
     }
-    if(!s.collected){ s.collected=true; ch=true; }
+    else if(e.kind==='grace'){
+      if(s.grace) continue;
+      for(var g=0;g<N;g++) s.co[g].word++;
+      s.grace=true; ch=true;
+    }
+    else if(e.kind==='debt'){                 // 第 13 天起每次都收
+      for(var j=0;j<N;j++){
+        var c=s.co[j];
+        while(c.debt>0 && c.level>1){ c.debt--; c.level--; ch=true; }
+        if(c.debt!==0){ c.debt=0; ch=true; }
+      }
+      if(!s.collected){ s.collected=true; ch=true; }
+    }
   }
   return ch;
 }
@@ -563,17 +596,17 @@ function host_(s,a){
   else if(a==='pause'){ if(s.start&&!s.pausedAt) s.pausedAt=Date.now(); }
   else if(a==='skip'){ if(s.start) s.start-=DAY_MS; }
   else if(a==='undo'){
-    if(s.hist.length){ var h=JSON.parse(s.hist.pop()); s.co=h.co; s.grace=h.grace; s.collected=h.collected; }
+    if(s.hist.length){ var h=JSON.parse(s.hist.pop()); s.co=h.co; s.grace=h.grace; s.collected=h.collected; s.storms=h.storms||[]; }
   }
   return s;
 }
 
 /* ── 连线 ───────────────────────────────────────────────── */
 var JOB={
-  work: {t:'💰 市场',  tip:'学生来做一个小任务（十个开合跳、答一题，你出）。做完了，点他们的公司，按「给 5 💰」。'},
+  work: {t:'💰 市场',  tip:'学生来做一个小任务（十个开合跳、答一题，你出）。做完了，点他们的公司，按「给 10 💰」。'},
   altar:{t:'🙌 祭坛',  tip:'学生要全组双手举高、大声念一节经文。念完了，点他们的公司，按「给 1 张 📖」。'},
   build:{t:'🏗️ 工地', tip:'学生带钱来盖房子。点他们的公司，钱够按钮就会亮。按下去，房子升一级。'},
-  tempt:{t:'🪝 试探官',tip:'你演坏人。对他们说：「签这里，现在就给你 10 块，没有人会知道。」他们签了按红色，抵挡就按下面两颗。'}
+  tempt:{t:'🪝 试探官',tip:'你演坏人。对他们说：「签这里，现在就给你 20 块，没有人会知道。」他们签了按红色，抵挡就按下面两颗。'}
 };
 var me=localStorage.getItem('me')||'', pin=localStorage.getItem('pin')||'';
 var room=(new URLSearchParams(location.search).get('room')||localStorage.getItem('room')||'').toUpperCase();
