@@ -110,9 +110,16 @@ h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
 .do.work{background:var(--goldD)}.do.altar{background:var(--grape)}.do.build{background:var(--teal)}
 .do.word{background:var(--teal)}.do.will{background:#8A5A2B}
 .two{display:grid;gap:12px;margin-top:20px}
-.say{background:var(--rock);color:#fff;border-radius:20px;padding:20px;text-align:center;margin-bottom:4px}
+.say{display:block;width:100%;border:none;background:var(--rock);color:#fff;border-radius:22px;
+ padding:22px 20px;text-align:center;margin-bottom:4px;font-family:var(--f);font-weight:800;cursor:pointer;
+ transition:transform .16s cubic-bezier(.2,1.3,.4,1),opacity .2s}
+.say:active{transform:scale(.975)}
+.say:disabled{opacity:.3;cursor:default}
 .say .q{font-size:19px;line-height:1.45}
-.say .m{font-size:34px;font-weight:800;margin-top:6px}
+.say .m{font-size:36px;font-weight:800;margin-top:6px}
+.say .s{font-size:13px;opacity:.85;margin-top:8px}
+.or{text-align:center;font-size:13px;color:var(--ink2);margin-top:22px}
+.or+.two{margin-top:10px}
 .note{background:#fff;border-radius:20px;padding:24px 20px;margin-top:18px;text-align:center;
  box-shadow:0 2px 10px rgba(90,60,20,.1)}
 .note .ic{font-size:44px;line-height:1}
@@ -254,10 +261,10 @@ td{padding:9px;text-align:center;font-size:15px;border-bottom:1px solid #F0E8D8}
     <div class="st"><span>🏗️</span><div><b>工地</b>拿钱来盖房子：
       ⛺ 帐篷 → 🛖 木屋（10 块）→ 🏠 石屋（20 块）→ 🏰 城堡（30 块）</div></div>
     <div class="st"><span>🪝</span><div><b>试探官</b>老师演坏人：「签这里，现在就给你 10 块」。
-      学生只有两条路 ——<br>
+      学生有三条路 ——<br>
+      <b>签</b>：拿 10 块，但<b>欠一个债 🪝</b><br>
       <b>念出神的话</b>：用掉 1 张 📖，坏人一定走<br>
-      <b>自己撑</b>：掷骰子，只有 1 和 2 撑得住。撑不住就签了，拿 10 块，
-      但<b>欠一个债 🪝</b></div></div>
+      <b>自己撑</b>：掷骰子，只有 1 和 2 撑得住。撑不住就等于签了</div></div>
   </div>
   <div class="hp">
     <b>怎么算分</b>
@@ -439,13 +446,14 @@ var GUIDE={
     note:'第 13 天之后，被拆楼的会跑来问能不能买回来。答案是不能。「钱买不回来。」'},
   tempt:{who:'你是试探官。演坏一点。',
     say:'「欸，过来。签这里，10 块马上给你。做工才 5 块，这里两倍。没有人会知道。」',
-    tasks:['他们要用 📖 赶你走，必须先大声说「经上记着说——」再念一节经文，念完你才按',
+    tasks:['他们真的要签，按红色那颗。钱马上给，债记下来',
+           '他们要用 📖 赶你走，必须先大声说「经上记着说——」再念一节经文，念完你才按',
            '他们选「自己撑」，你按 🎲，手机掷骰子，你把结果念出来',
            '第 3 天起，主动走到各组去招人，别等他们来'],
     verses:[['马太福音 4:10','撒但，退去吧！因为经上记着说：当拜主你的神，单要事奉他。'],
             ['雅各书 4:7','务要抵挡魔鬼，魔鬼就必离开你们。'],
             ['箴言 22:7','欠债的是债主的仆人。']],
-    tap:'念了神的话 → 按「📖 念出神的话」。要赌 → 按「🎲 自己撑撑看」。',
+    tap:'签了 → 按红色。念了神的话 → 按「📖」。要赌 → 按「🎲」。',
     note:'第 13 天之后你的按钮会变：签了当场拆楼。讲清楚了再让他们选。'}
 };
 var BROKERS=['wss://broker.emqx.io:8084/mqtt','wss://broker.hivemq.com:8884/mqtt'];
@@ -522,22 +530,29 @@ function act_(s,d){
     if(c.word<=0) return {ok:false,error:c.name+' 没有 📖，只能自己撑'};
     push_(s); c.word--; return {ok:true,msg:c.name+' 念出神的话，试探官走了 🛡️'};
   }
+  if(a==='sign'){
+    if(!s.start) return {ok:false,error:'还没开始'};
+    push_(s);
+    return {ok:true,msg:c.name+' 签了 → '+sign_(c,dy)};
+  }
   if(a==='will'){
     if(!s.start) return {ok:false,error:'还没开始'};
     push_(s);
     var r=Math.floor(Math.random()*6)+1;
     if(r<=2) return {ok:true,msg:'🎲 '+r+' — 撑住了！'};
-    c.cash+=GAIN; c.debt++;
-    if(dy>=DEBTDAY){
-      var lost=0;
-      while(c.debt>0 && c.level>1){ c.debt--; c.level--; lost++; }
-      c.debt=0;
-      return {ok:true,msg:'🎲 '+r+' — 撑不住，签了 → +'+GAIN+' 💰，'+
-        (lost ? ('马上拆掉一层 → '+LV_EMO[c.level]+' '+LV_NAME[c.level]) : '已经是 ⛺，没得拆了')};
-    }
-    return {ok:true,msg:'🎲 '+r+' — 撑不住，签了 → +'+GAIN+' 💰，欠 1 个 🪝'};
+    return {ok:true,msg:'🎲 '+r+' — 撑不住，签了 → '+sign_(c,dy)};
   }
   return {ok:false,error:'动作不明'};
+}
+/* 签约的后果。第 13 天以前记一个 🪝，第 13 天起当场拆一层。 */
+function sign_(c,dy){
+  c.cash+=GAIN;
+  if(dy>=DEBTDAY){
+    if(c.level>1){ c.level--; return '+'+GAIN+' 💰，马上拆掉一层 → '+LV_EMO[c.level]+' '+LV_NAME[c.level]; }
+    return '+'+GAIN+' 💰，已经是 ⛺，没得拆了';
+  }
+  c.debt++;
+  return '+'+GAIN+' 💰，欠 1 个 🪝';
 }
 function host_(s,a){
   if(a==='reset') return fresh_();
@@ -558,7 +573,7 @@ var JOB={
   work: {t:'💰 市场',  tip:'学生来做一个小任务（十个开合跳、答一题，你出）。做完了，点他们的公司，按「给 5 💰」。'},
   altar:{t:'🙌 祭坛',  tip:'学生要全组双手举高、大声念一节经文。念完了，点他们的公司，按「给 1 张 📖」。'},
   build:{t:'🏗️ 工地', tip:'学生带钱来盖房子。点他们的公司，钱够按钮就会亮。按下去，房子升一级。'},
-  tempt:{t:'🪝 试探官',tip:'你演坏人。对他们说：「签这里，现在就给你 10 块，没有人会知道。」然后让他们选。'}
+  tempt:{t:'🪝 试探官',tip:'你演坏人。对他们说：「签这里，现在就给你 10 块，没有人会知道。」他们签了按红色，抵挡就按下面两颗。'}
 };
 var me=localStorage.getItem('me')||'', pin=localStorage.getItem('pin')||'';
 var room=(new URLSearchParams(location.search).get('room')||localStorage.getItem('room')||'').toUpperCase();
@@ -723,7 +738,7 @@ function showAck(d){
     var m=d.msg.match(/^🎲 (\d)\s*—\s*/);
     o.innerHTML='<div class="dice">🎲 '+(m?m[1]:'')+'</div>'+esc(m?d.msg.slice(m[0].length):d.msg);
     o.className='out '+(d.msg.indexOf('撑住')>0?'good':'bad');
-  } else { o.className='out good'; o.textContent=d.msg||''; }
+  } else { o.className='out '+((d.msg||'').indexOf('签了')>=0?'bad':'good'); o.textContent=d.msg||''; }
 }
 
 /* ── 画面 ───────────────────────────────────────────────── */
@@ -823,9 +838,10 @@ function paint(){
       '<span class="s">'+(c&&c.level<4?'要 '+c.cost+' 💰':'')+'</span></button>';
   }
   if(me==='tempt'){
-    sayEl.innerHTML='<div class="say"><div class="q">「签这里，现在就给你」</div><div class="m">+'+
-      S.gain+' 💰</div></div>';
-    B.innerHTML='<div class="two">'+
+    sayEl.innerHTML='<button class="say" onclick="hit(\'sign\')"'+(off?' disabled':'')+'>'+
+      '<div class="q">「签这里，现在就给你」</div><div class="m">+'+S.gain+' 💰</div>'+
+      '<div class="s">他们真的签了？按这里</div></button>';
+    B.innerHTML='<div class="or">或者，他们抵挡</div><div class="two">'+
       '<button class="do word" onclick="hit(\'word\')"'+((c&&c.word>0)?'':' disabled')+
         '>📖 念出神的话<span class="s">'+((c&&c.word>0)?'一定赶走他':'手上没有 📖')+'</span></button>'+
       '<button class="do will" onclick="hit(\'will\')"'+(off?' disabled':'')+
