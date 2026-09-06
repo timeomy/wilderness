@@ -564,6 +564,7 @@ var me=localStorage.getItem('me')||'', pin=localStorage.getItem('pin')||'';
 var room=(new URLSearchParams(location.search).get('room')||localStorage.getItem('room')||'').toUpperCase();
 var T=localStorage.getItem('team')!==null?Number(localStorage.getItem('team')):null;
 var S=null, GS=null, tick=null, live=null, pend={}, conns=[], gen=0, seenRid={};
+var lastRx=0, lastEcho=0, wdAt=0, pubTimer=null;
 var esc=function(x){return String(x).replace(/[&<>"']/g,function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
 var newCode=function(){var A='ABCDEFGHJKLMNPQRSTUVWXYZ',s='';
@@ -624,7 +625,8 @@ function openOne(i,myGen,waitMs){
     try{
       if(myGen!==gen){ try{ client.end(true); }catch(e){} return; }
       slot.up=true; backoff=2500; refreshLive();
-      if(isScreen()){ client.subscribe(topic('act')); publishState(); }
+      lastRx=Date.now(); lastEcho=Date.now();
+      if(isScreen()){ client.subscribe(topic('act')); client.subscribe(topic('state')); publishState(); }
       else { client.subscribe(topic('state')); client.subscribe(topic('ack')); }
       paint();
     }catch(err){ logErr('connect',err); }
@@ -632,6 +634,8 @@ function openOne(i,myGen,waitMs){
   client.on('message',function(tp,pl){
     try{
       if(myGen!==gen) return;
+      lastRx=Date.now();
+      if(isScreen()&&tp===topic('state')){ lastEcho=Date.now(); return; }
       var d; try{ d=JSON.parse(pl.toString()); }catch(e){ return; }
       if(isScreen()&&tp===topic('act')){
         if(d.rid){ if(seenRid[d.rid]) return; seenRid[d.rid]=1; trimSeen(); }
@@ -681,7 +685,12 @@ function publishState(force){
   // 公共中继会因为讲太多话把我们踢掉，所以有变化才送，没变化 6 秒送一次心跳
   var sig=JSON.stringify(S.rows)+S.day+S.started+S.running;
   var now=Date.now();
-  if(!force && sig===lastSig && now-lastPub<6000) return;
+  if(!force && sig===lastSig && now-lastPub<8000) return;
+  // 一群人连按的时候，把好几次合并成一次送，公共中继才不会把我们当洪水
+  if(now-lastPub<600){
+    if(!pubTimer) pubTimer=setTimeout(function(){ pubTimer=null; publishState(true); },600-(now-lastPub));
+    return;
+  }
   lastSig=sig; lastPub=now;
   pub(topic('state'),JSON.stringify(S),{retain:true});
 }
@@ -980,6 +989,19 @@ function hostView(){
 }
 function ren(i){ send({action:'rename',team:i,name:document.getElementById('nm'+i).value}); }
 
+/* 僵尸连线：socket 说它连着，其实什么都送不到。公共中继被打到限流时就会这样。
+   手机 30 秒没收到任何东西、大屏幕 20 秒听不到自己的回音，就整个重接。 */
+function watchdog(){
+  if(!room||live!==true) return;
+  var now=Date.now(), dead;
+  if(isScreen()) dead = (now-lastPub<20000) && (now-lastEcho>20000);
+  else dead = (now-lastRx>30000);
+  if(dead && now-wdAt>30000){
+    wdAt=now; logErr('watchdog', isScreen()?'no echo 20s':'no rx 30s');
+    connKey=''; connect();
+  }
+}
+setInterval(watchdog,5000);
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') be('who'); });
 be(me&&(JOB[me]||me==='wall'||me==='host')?me:'who');
 setInterval(function(){ if(!isScreen()&&live) paint(); },2000);
